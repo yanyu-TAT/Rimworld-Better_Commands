@@ -7,6 +7,7 @@ using RimWorld;
 using Verse;
 using HarmonyLib;
 using UnityEngine;
+using BetterCommands.Settings;
 
 namespace BetterCommands.Core
 {
@@ -30,7 +31,7 @@ namespace BetterCommands.Core
                 if (Input.GetKeyDown(key))
                 {
                     //Verse.Log.Message($"检测到按键: {key}");
-                    {
+                    if (GroupSettingsUtility.ShouldHandleGroupShortcuts(i)){
                         bool ctrlPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
                         bool shiftPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
                         Verse.Log.Message($"Ctrl: {ctrlPressed}, Shift: {shiftPressed}");
@@ -67,8 +68,3 @@ namespace BetterCommands.Core
         }
     }
 }
-
-/*
- * 01/29 04:32 修复重影问题；快捷键冲突问题待修复
- * 01/30 16:07 并非快捷键问题，而是数组未初始化导致的错误，已修复；存档功能待测试；计划添加覆盖键位功能
- */
