@@ -1,9 +1,0 @@
-D:\CODE\rim\Better_Commands\Better_Commands\Assemblies\Better_Commands.dll
-D:\CODE\rim\Better_Commands\Better_Commands\Assemblies\Better_Commands.pdb
-D:\CODE\rim\Better_Commands\Better_Commands\obj\Release\Better_Commands.csproj.AssemblyReference.cache
-D:\CODE\rim\Better_Commands\Better_Commands\obj\Release\Better_Commands.GeneratedMSBuildEditorConfig.editorconfig
-D:\CODE\rim\Better_Commands\Better_Commands\obj\Release\Better_Commands.AssemblyInfoInputs.cache
-D:\CODE\rim\Better_Commands\Better_Commands\obj\Release\Better_Commands.AssemblyInfo.cs
-D:\CODE\rim\Better_Commands\Better_Commands\obj\Release\Better_Commands.csproj.CoreCompileInputs.cache
-D:\CODE\rim\Better_Commands\Better_Commands\obj\Release\Better_Commands.dll
-D:\CODE\rim\Better_Commands\Better_Commands\obj\Release\Better_Commands.pdb
