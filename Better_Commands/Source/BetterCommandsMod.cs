@@ -61,9 +61,9 @@ namespace BetterCommands.Core
 
             groupShortcutSettingHandle.CustomDrawerHeight = 70f;
             groupShortcutSettingHandle.Description =
-                "• 兼容模式: 组合键不切换游戏速度（推荐）\n" +
-                "• 禁用模式: 1-4 键仅用于切换游戏速度，不触发编组功能（稳定）\n" +
-                "• 冲突模式: 组合键同时触发编组和切换游戏速度";
+                "• 兼容模式: 组合键不触发原版功能（推荐）\n" +
+                "• 禁用模式: 冲突的键只触发原版功能，不触发编组功能（稳定）\n" +
+                "• 冲突模式: 组合键同时触发编组和原版功能";
 
             Log.Message("BetterCommands: 设置项添加成功");
         }
@@ -73,7 +73,13 @@ namespace BetterCommands.Core
     }
 }
 
+/* Todo List:
+ * - [ ] 实现屏幕位置编组（编屏）功能
+ * - [ ] 实现行进并攻击指令
+ */
+
 /*
+ * Develop Log:
  * 01/29 04:32 修复重影问题；快捷键冲突问题待修复
  * 01/29 16:07 并非快捷键问题，而是数组未初始化导致的错误，已修复；存档功能待测试；计划添加覆盖键位功能
  * 01/29 21:43 存档功能测试通过；成功添加设置选项，允许用户选择快捷键覆盖模式

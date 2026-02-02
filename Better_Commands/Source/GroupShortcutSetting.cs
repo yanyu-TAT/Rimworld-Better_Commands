@@ -30,7 +30,8 @@ namespace BetterCommands.Settings
         {
             var mode = CurrentGroupShortcutMode;
 
-            if ((keyNum >= 5 && keyNum <= 9) || keyNum == 0) return true;
+            //99代表编屏操作
+            if ((keyNum >= 5 && keyNum <= 9) || keyNum == 0 || keyNum == 99) return true;
 
             if (keyNum >= 1 && keyNum <= 4)
             {
