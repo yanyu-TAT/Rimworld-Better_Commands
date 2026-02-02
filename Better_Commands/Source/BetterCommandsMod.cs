@@ -55,7 +55,7 @@ namespace BetterCommands.Core
             groupShortcutSettingHandle = Settings.GetHandle<GroupShortcutMode>(
                 "GroupShortcutMode",
                 "编组快捷键模式",
-                "控制数字键1~4相关的快捷键行为模式",
+                "控制组合键与原版快捷单键的交互方式",
                 GroupShortcutMode.Compact
             );
 
@@ -74,7 +74,8 @@ namespace BetterCommands.Core
 }
 
 /* Todo List:
- * - [ ] 实现屏幕位置编组（编屏）功能
+ * - [x] 实现编组保存与选中功能
+ * - [x] 实现屏幕位置编组（编屏）功能
  * - [ ] 实现行进并攻击指令
  */
 
@@ -83,4 +84,5 @@ namespace BetterCommands.Core
  * 01/29 04:32 修复重影问题；快捷键冲突问题待修复
  * 01/29 16:07 并非快捷键问题，而是数组未初始化导致的错误，已修复；存档功能待测试；计划添加覆盖键位功能
  * 01/29 21:43 存档功能测试通过；成功添加设置选项，允许用户选择快捷键覆盖模式
+ * 02/03 00:21 实现屏幕位置编组及存档编组功能并测试通过
  */

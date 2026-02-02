@@ -76,13 +76,14 @@ namespace BetterCommands.Core
                 KeyCode key = KeyCode.F1 + i;
                 if (Input.GetKeyDown(key))
                 {
+                    Log.Message($"检测到按键: {key}");
                     if (GroupSettingsUtility.ShouldHandleGroupShortcuts(99))
                     {
                         //ctrl + F1-F11
                         if (ctrlPressed && !shiftPressed)
                         {
                             Verse.Log.Message($"保存屏幕编组 {1 + i}");
-                            groupData.SaveViewPortState(1 + i);
+                            groupData.SaveViewPortState(i);
                             Messages.Message($"屏幕编组 {1 + i} 已保存", MessageTypeDefOf.TaskCompletion);
                             Event.current?.Use();
                             return;
@@ -92,7 +93,7 @@ namespace BetterCommands.Core
                         if (shiftPressed && !ctrlPressed)
                         {
                             Verse.Log.Message($"跳转屏幕编组 {1 + i}");
-                            groupData.JumpToViewPortState(1 + i);
+                            groupData.JumpToViewPortState(i);
                             Event.current?.Use();
                             return;
                         }

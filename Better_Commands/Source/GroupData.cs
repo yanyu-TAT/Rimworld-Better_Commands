@@ -41,24 +41,45 @@ namespace BetterCommands.Core
             }
         }
 
-        public override void ExposeData()
+        public override void ExposeData() //持久化的数据存取
         {
             base.ExposeData();
             if (Scribe.mode == LoadSaveMode.Saving)
             {
+                //人员编组数据存储
                 for (int i = 0; i < 10; i++)
                 {
                     List<int> list = groupList[i];
                     Scribe_Collections.Look(ref list, $"BertterCommands_Group{i}", LookMode.Value);
                 }
+
+                //屏幕视角数据存储
+                for (int i = 0; i < viewPortStates.Count; i++)
+                {
+                    ViewPortState state = viewPortStates[i];
+                    Scribe_Values.Look(ref state.position, $"BertterCommands_ViewPortPosition{i}");
+                    Scribe_Values.Look(ref state.zoom, $"BertterCommands_ViewPortZoom{i}");
+                    Scribe_Values.Look(ref state.mapID, $"BertterCommands_ViewPortMapID{i}");
+                }
             }
             else if (Scribe.mode == LoadSaveMode.LoadingVars)
             {
+                //人员编组数据加载
                 for (int i = 0; i < 10; i++)
                 {
                     List<int> list = null;
                     Scribe_Collections.Look(ref list, $"BertterCommands_Group{i}", LookMode.Value);
                     groupList[i] = list ?? new List<int>();
+                }
+
+                //屏幕视角数据加载
+                for (int i = 0; i < viewPortStates.Count; i++)
+                {
+                    ViewPortState state = new();
+                    Scribe_Values.Look(ref state.position, $"BertterCommands_ViewPortPosition{i}");
+                    Scribe_Values.Look(ref state.zoom, $"BertterCommands_ViewPortZoom{i}");
+                    Scribe_Values.Look(ref state.mapID, $"BertterCommands_ViewPortMapID{i}");
+                    viewPortStates[i] = state;
                 }
             }
         }
