@@ -1,0 +1,12 @@
+<Defs>
+	<JobDef>
+		<defName>Marching</defName>
+		<driverClass>BetterCommands.Commands.JobDriver_Marching</driverClass>
+		<reportString>Marching</reportString>
+		<alwaysShowWeapon>true</alwaysShowWeapon>
+		<casualInterruptible>false</casualInterruptible>
+		<allowOpportunisticPrefix>false</allowOpportunisticPrefix>
+		<carryThingAfterJob>true</carryThingAfterJob>
+		<dropThingBeforeJob>false</dropThingBeforeJob>
+	</JobDef>
+</Defs>
