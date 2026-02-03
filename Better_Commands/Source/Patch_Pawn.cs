@@ -2,7 +2,7 @@
 using HarmonyLib;
 using Verse;
 
-namespace BetterCommands.UI
+namespace BetterCommands.Patches
 {
     [HarmonyPatch(typeof(Pawn), "GetGizmos")]
     public static class Patch_Pawn

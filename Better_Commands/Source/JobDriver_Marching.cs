@@ -98,6 +98,7 @@ namespace BetterCommands.Commands
             {
                 //远程攻击
                 Job job = JobMaker.MakeJob(JobDefOf.AttackStatic, thing);
+                job.endIfCantShootTargetFromCurPos = true;
                 return job;
             }
         }
