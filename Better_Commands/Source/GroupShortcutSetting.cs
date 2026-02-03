@@ -29,7 +29,7 @@ namespace BetterCommands.Settings
 
         public static bool ShouldHandleGroupShortcuts(int keyNum)
         {
-            Log.Message("[Better Commands] Checking group shortcut for keyNum: " + keyNum);
+            //Log.Message("[Better Commands] Checking group shortcut for keyNum: " + keyNum);
             var mode = CurrentGroupShortcutMode;
             //99表示Fn键，始终处理
             if ((keyNum >= 5 && keyNum <= 9) || keyNum == 0 || keyNum == 99) return true;
@@ -42,7 +42,7 @@ namespace BetterCommands.Settings
             return false;
         }
 
-        public static bool ShouldBlockSpeedControl(int keyNum, bool ctrlPressed, bool shiftPressed)
+        public static bool ShouldBlockSpeedControl(int keyNum, bool otherKeyPressed)
         {
             //传入的keyNum为99时表示Fn键，阻止所有原版快捷键
             var mode = CurrentGroupShortcutMode;
@@ -52,7 +52,7 @@ namespace BetterCommands.Settings
                 switch (mode)
                 {
                     case GroupShortcutMode.Compact:
-                        return ctrlPressed || shiftPressed;
+                        return otherKeyPressed;
                     case GroupShortcutMode.Disable:
                         return false;
                     case GroupShortcutMode.Conflict:

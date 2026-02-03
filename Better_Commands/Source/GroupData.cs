@@ -4,8 +4,9 @@
  */
 
 using RimWorld;
-using Verse;
+using System;
 using System.Collections.Generic;
+using Verse;
 
 namespace BetterCommands.Core
 {
@@ -84,6 +85,7 @@ namespace BetterCommands.Core
             }
         }
 
+        //创建编组
         public bool CreateGroup(int num, List<Pawn> pawns)
         {
             if (num < 0 || num >= 10){
@@ -105,6 +107,7 @@ namespace BetterCommands.Core
             return true;
         }
 
+        //选中编组
         public bool SelectGroup(int num)
         {
             if (num < 0 || num >= 10) { 
@@ -150,6 +153,31 @@ namespace BetterCommands.Core
             return true;
         }
 
+        //移出编组
+        public int DeleteFromGroup(int num, List<Pawn> pawns)
+        {
+            if (num < 0 || num >= 10)
+            {
+                Log.Error("[Better Commands] Group number out of range.");
+                return 0;
+            }
+
+            var cnt = 0;
+            foreach (var pawn in pawns)
+            {
+                if (pawn != null)
+                {
+                    var id = pawn.thingIDNumber;
+                    if (groupList[num].Remove(id))
+                    {
+                        cnt++; 
+                    }
+                }
+            }
+            return cnt;
+        }
+
+        //保存屏幕编组
         public bool SaveViewPortState(int index)
         {
             Log.Message("[Better Commands] Saving viewport state: " + index);
@@ -164,6 +192,7 @@ namespace BetterCommands.Core
             return true;
         }
 
+        //跳转至屏幕编组
         public bool JumpToViewPortState(int index)
         {
             Log.Message("[Better Commands] Jumping to viewport state: " + index);

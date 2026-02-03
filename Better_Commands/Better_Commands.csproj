@@ -50,4 +50,8 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Texture\Better_Commands\UI\Buttons\" />
+  </ItemGroup>
+
 </Project>

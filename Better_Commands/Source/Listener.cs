@@ -1,6 +1,9 @@
 ﻿/*
  * 监听shift + 数字
  * 监听ctrl  + 数字
+ * 监听alt   + 数字
+ * 监听ctrl  + Fn
+ * 监听shift + Fn
  */
 
 using RimWorld;
@@ -15,7 +18,9 @@ namespace BetterCommands.Core
     [HarmonyPatch("Update")]
     public static class Listener
     {
-        static void Postfix()
+        private static Dictionary<KeyCode, bool> keysProcessed = new();
+        private static int lastFrame = -1;
+        public static void Postfix()
         {
             if (Current.Game == null)
                 return;
@@ -24,8 +29,16 @@ namespace BetterCommands.Core
             if (groupData == null)
                 return;
 
+            //重置处理记录
+            if (lastFrame != Time.frameCount)
+            {
+                lastFrame = Time.frameCount;
+                keysProcessed.Clear();
+            }
+
             bool ctrlPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
             bool shiftPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            bool altPressed = Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
 
             // 检测是否按下了数字键 0-9
             for (int i = 0; i <= 9; i++)
@@ -34,14 +47,18 @@ namespace BetterCommands.Core
 
                 if (Input.GetKeyDown(key))
                 {
+                    //防止重复处理
+                    if (keysProcessed.ContainsKey(key) && keysProcessed[key])
+                        continue;
+                    keysProcessed[key] = true;
                     //Verse.Log.Message($"检测到按键: {key}");
                     if (GroupSettingsUtility.ShouldHandleGroupShortcuts(i)){
                         //Verse.Log.Message($"Ctrl: {ctrlPressed}, Shift: {shiftPressed}");
 
                         //ctrl + 数字键
-                        if (ctrlPressed && !shiftPressed)
+                        if (ctrlPressed && !shiftPressed && !altPressed)
                         {
-                            Verse.Log.Message($"保存编组 {i}");
+                            //Verse.Log.Message($"保存编组 {i}");
                             List<Pawn> selectedPawns = Find.Selector.SelectedPawns
                                 .Where(p => p.Faction == Faction.OfPlayer)
                                 .ToList();
@@ -52,17 +69,45 @@ namespace BetterCommands.Core
                                 Messages.Message($"编组 {i} 已保存 ({selectedPawns.Count}个单位)", MessageTypeDefOf.TaskCompletion);
                             }
                             else                             {
-                                Messages.Message("没有选中可编组单位", MessageTypeDefOf.RejectInput);
+                                Messages.Message("未选中可编组单位", MessageTypeDefOf.RejectInput);
                             }
                             Event.current?.Use();
                             return;
                         }
 
                         //shift + 数字键
-                        if (shiftPressed && !ctrlPressed)
+                        if (shiftPressed && !ctrlPressed && !altPressed)
                         {
-                            Verse.Log.Message($"选中编组 {i}");
+                            //Verse.Log.Message($"选中编组 {i}");
                             groupData.SelectGroup(i);
+                            Event.current?.Use();
+                            return;
+                        }
+
+                        //alt + 数字键
+                        if (!ctrlPressed && altPressed && !shiftPressed)
+                        {
+                            List<Pawn> selectedPawns = Find.Selector.SelectedPawns
+                                .Where(p => p.Faction == Faction.OfPlayer)
+                                .ToList();
+
+                            if(selectedPawns.Count != 0)
+                            {
+                                int cnt = groupData.DeleteFromGroup(i, selectedPawns);
+                                if(cnt != 0)
+                                {
+                                    Messages.Message($"编组 {i} 已移出{cnt}个单位", MessageTypeDefOf.TaskCompletion);
+                                }
+                                else
+                                {
+                                    Messages.Message($"编组 {i} 中未包含已选中的单位", MessageTypeDefOf.RejectInput);
+                                }
+                            }
+                            else
+                            {
+                                Messages.Message("未选中可编组单位", MessageTypeDefOf.RejectInput);
+                            }
+
                             Event.current?.Use();
                             return;
                         }
@@ -76,13 +121,13 @@ namespace BetterCommands.Core
                 KeyCode key = KeyCode.F1 + i;
                 if (Input.GetKeyDown(key))
                 {
-                    Log.Message($"检测到按键: {key}");
+                    //Log.Message($"检测到按键: {key}");
                     if (GroupSettingsUtility.ShouldHandleGroupShortcuts(99))
                     {
                         //ctrl + F1-F11
                         if (ctrlPressed && !shiftPressed)
                         {
-                            Verse.Log.Message($"保存屏幕编组 {1 + i}");
+                            //Verse.Log.Message($"保存屏幕编组 {1 + i}");
                             groupData.SaveViewPortState(i);
                             Messages.Message($"屏幕编组 {1 + i} 已保存", MessageTypeDefOf.TaskCompletion);
                             Event.current?.Use();
@@ -92,7 +137,7 @@ namespace BetterCommands.Core
                         //shift + F1-F11
                         if (shiftPressed && !ctrlPressed)
                         {
-                            Verse.Log.Message($"跳转屏幕编组 {1 + i}");
+                            //Verse.Log.Message($"跳转屏幕编组 {1 + i}");
                             groupData.JumpToViewPortState(i);
                             Event.current?.Use();
                             return;

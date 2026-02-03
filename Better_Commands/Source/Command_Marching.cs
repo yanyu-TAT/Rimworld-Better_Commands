@@ -9,14 +9,16 @@ namespace BetterCommands.Commands
 {
     public class Command_Marching : Command_Action
     {
-        private static JobDef marchDef = DefDatabase<JobDef>.GetNamed("Marching");
+        private static readonly JobDef marchDef = DefDatabase<JobDef>.GetNamed("Marching");
+        private static readonly Texture2D iconTexture = ContentFinder<Texture2D>.Get("Better_Commands/UI/Commands/MarchingCommandButton");
+
         public Command_Marching()
         {
             // 设置标签、描述和图标（之后需添加翻译文件）
             this.defaultLabel = "行军";
             this.defaultDesc = "保持警戒前进，有敌人进入范围时原地停止并攻击";
-            //this.icon = ContentFinder<Texture2D>.Get("UI/Commands/BetterCommands_Marching", true);
-            this.icon = BaseContent.BadTex; // 占位图标，之后替换
+            this.icon = iconTexture;
+            //this.icon = BaseContent.BadTex; // 占位图标，之后替换
         }
 
         public override void ProcessInput(Event ev)
@@ -75,7 +77,7 @@ namespace BetterCommands.Commands
             foreach (var pawn in draftedPawns)
             {
                 Job job = JobMaker.MakeJob(marchDef, target);
-                pawn.jobs.StartJob(job, JobCondition.InterruptOptional);
+                pawn.jobs.StartJob(job, JobCondition.InterruptForced);
             }
 
             SoundDefOf.Tick_High.PlayOneShotOnCamera();

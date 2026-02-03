@@ -43,6 +43,7 @@ namespace BetterCommands.Commands
                 {
                     //近战攻击锁定所有威胁目标（现不做实现）
                     Log.Warning("[BetterCommands] Melee attack target scanning not implemented yet.");
+                    EndJobWith(JobCondition.Incompletable);
                     return;
                 }
 
