@@ -9,6 +9,7 @@ namespace BetterCommands.Commands
 {
     public class Command_Marching : Command_Action
     {
+        private static JobDef marchDef = DefDatabase<JobDef>.GetNamed("Marching");
         public Command_Marching()
         {
             // 设置标签、描述和图标（之后需添加翻译文件）
@@ -73,9 +74,8 @@ namespace BetterCommands.Commands
             //发布指令
             foreach (var pawn in draftedPawns)
             {
-                JobDef jobDef = DefDatabase<JobDef>.GetNamed("Marching");
-                Job job = JobMaker.MakeJob(jobDef, target);
-                pawn.jobs.StartJob(job, JobCondition.InterruptForced);
+                Job job = JobMaker.MakeJob(marchDef, target);
+                pawn.jobs.StartJob(job, JobCondition.InterruptOptional);
             }
 
             SoundDefOf.Tick_High.PlayOneShotOnCamera();

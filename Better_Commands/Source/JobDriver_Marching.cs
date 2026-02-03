@@ -6,6 +6,8 @@ namespace BetterCommands.Commands
 {
     public class JobDriver_Marching : JobDriver
     {
+        private static readonly JobDef rangedAttackDef = DefDatabase<JobDef>.GetNamed("BetterAttackStatic");
+
         private const int CheckInterval = 60;
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
@@ -52,17 +54,13 @@ namespace BetterCommands.Commands
                     maxDistance: 9999f
                 );
 
-                if ( target != null)
+                if (target != null)
                 {
                     //发现目标，开始攻击
+                    Log.Message($"[BetterCommand] Hostile detected");
                     Job attackJob = CreateAttackJob(actor, target);
                     if (attackJob != null)
-                    {
-                        Job curJob = actor.jobs.curJob;
-                        //将当前任务放回队列前端
-                        actor.jobs.jobQueue.EnqueueFirst(curJob);
                         actor.jobs.StartJob(attackJob, JobCondition.InterruptOptional);
-                    }
                     return;
                 }
             };
@@ -97,7 +95,7 @@ namespace BetterCommands.Commands
             else
             {
                 //远程攻击
-                Job job = JobMaker.MakeJob(JobDefOf.AttackStatic, thing);
+                Job job = JobMaker.MakeJob(rangedAttackDef, thing, this.job.targetA);
                 job.endIfCantShootTargetFromCurPos = true;
                 return job;
             }
