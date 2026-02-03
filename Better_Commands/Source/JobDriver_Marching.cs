@@ -18,15 +18,14 @@ namespace BetterCommands.Commands
 
             moving.tickAction = () =>
             {
-                int ticker = 0;
+                int ticker = Current.Game.tickManager.gameStartAbsTick;
                 Pawn actor = this.pawn;
                 if (actor == null || !actor.Spawned || !actor.Drafted)
-                { //未生成/未征召不执行
+                {
                     return;
                 }
 
                 //隔一小段时间检测
-                ticker++;
                 if (ticker % CheckInterval != 0)
                 {
                     return;
