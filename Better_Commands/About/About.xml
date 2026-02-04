@@ -5,7 +5,7 @@
   <author>yanyu</author>
   <description>向游戏中添加了类似RTS游戏的快捷编组功能的模组。</description>
   <packageId>yanyu.bettercommands</packageId>
-  <modVersion>0.0.2</modVersion>
+  <modVersion>0.0.4</modVersion>
 
   <supportedVersions>
     <li>1.6</li>

@@ -66,10 +66,10 @@ namespace BetterCommands.Core
                             if (selectedPawns.Count != 0)
                             {
                                 groupData.CreateGroup(i, selectedPawns);
-                                Messages.Message($"编组 {i} 已保存 ({selectedPawns.Count}个单位)", MessageTypeDefOf.TaskCompletion);
+                                Messages.Message(Helper.Translate("BetterCommands.GroupSavingDone", ("num", i), ("count", selectedPawns.Count)), MessageTypeDefOf.TaskCompletion);
                             }
-                            else                             {
-                                Messages.Message("未选中可编组单位", MessageTypeDefOf.RejectInput);
+                            else{
+                                Messages.Message("BetterCommands.GroupingNoValidPawnRefusion".Translate(), MessageTypeDefOf.RejectInput);
                             }
                             Event.current?.Use();
                             return;
@@ -96,16 +96,16 @@ namespace BetterCommands.Core
                                 int cnt = groupData.DeleteFromGroup(i, selectedPawns);
                                 if(cnt != 0)
                                 {
-                                    Messages.Message($"编组 {i} 已移出{cnt}个单位", MessageTypeDefOf.TaskCompletion);
+                                    Messages.Message(Helper.Translate("BetterCommands.GroupDeletingDone", ("num", i), ("count", cnt)), MessageTypeDefOf.TaskCompletion);
                                 }
                                 else
                                 {
-                                    Messages.Message($"编组 {i} 中未包含已选中的单位", MessageTypeDefOf.RejectInput);
+                                    Messages.Message(Helper.Translate("BetterCommands.GroupDeletingNotContainRefusion", ("num", i)), MessageTypeDefOf.RejectInput);
                                 }
                             }
                             else
                             {
-                                Messages.Message("未选中可编组单位", MessageTypeDefOf.RejectInput);
+                                Messages.Message("BetterCommands.GroupingNoValidPawnRefusion".Translate(), MessageTypeDefOf.RejectInput);
                             }
 
                             Event.current?.Use();
@@ -129,7 +129,7 @@ namespace BetterCommands.Core
                         {
                             //Verse.Log.Message($"保存屏幕编组 {1 + i}");
                             groupData.SaveViewPortState(i);
-                            Messages.Message($"屏幕编组 {1 + i} 已保存", MessageTypeDefOf.TaskCompletion);
+                            Messages.Message(Helper.Translate("BetterCommands.CameraSavingDone", ("num", i + 1)), MessageTypeDefOf.TaskCompletion);
                             Event.current?.Use();
                             return;
                         }

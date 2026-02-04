@@ -18,6 +18,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	<OutputPath>D:\CODE\rim\Better_Commands\Better_Commands\Assemblies</OutputPath>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Texture\**" />
+    <EmbeddedResource Remove="Texture\**" />
+    <None Remove="Texture\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="0Harmony">
@@ -48,10 +53,6 @@
       <HintPath>..\..\..\..\steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
 		<Private>False</Private>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Texture\Better_Commands\UI\Buttons\" />
   </ItemGroup>
 
 </Project>

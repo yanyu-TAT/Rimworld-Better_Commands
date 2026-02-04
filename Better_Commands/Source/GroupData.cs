@@ -7,6 +7,7 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using Verse;
+using Verse.Sound;
 
 namespace BetterCommands.Core
 {
@@ -144,6 +145,28 @@ namespace BetterCommands.Core
                 foreach (var pawn in pawnsToSelect)
                 {
                     Find.Selector.Select(pawn, false, true);
+                    //如果启用了自动征召且征召可用，则播放音效并征召未征召的单位
+                    //Log.Message($"[BetterCommands] Selecting pawns, auto draft:{BetterCommandsMod.CurrentAutoDraftOption}");
+                    if (BetterCommandsMod.CurrentAutoDraftOption && !pawn.Drafted)
+                    {
+                        //依据原版逻辑进行判定
+                        bool canDraft = !(pawn.Downed || pawn.Deathresting);
+                        if(ModsConfig.BiotechActive && pawn.IsColonyMech && canDraft)
+                        {
+                            AcceptanceReport acceptanceReport = MechanitorUtility.CanDraftMech(pawn);
+                            if(!acceptanceReport)
+                            {
+                                canDraft = false;
+                            }
+                        }
+
+                        //Log.Message($"")
+                        if (canDraft)
+                        {
+                            SoundDefOf.DraftOn.PlayOneShotOnCamera();
+                            pawn.drafter.Drafted = true;
+                        }
+                    }
                 }
             }
             else
@@ -195,7 +218,7 @@ namespace BetterCommands.Core
         //跳转至屏幕编组
         public bool JumpToViewPortState(int index)
         {
-            Log.Message("[Better Commands] Jumping to viewport state: " + index);
+            //Log.Message("[Better Commands] Jumping to viewport state: " + index);
             if (index < 0 || index >= viewPortStates.Count) { 
                 Log.Error("[Better Commands] Viewport state index out of range.");
                 return false; 
@@ -210,7 +233,7 @@ namespace BetterCommands.Core
             Map targetMap = Find.Maps.Find(m => m.uniqueID == state.mapID);
             if (targetMap == null) { 
                 Log.Warning("[Better Commands] Target map not found.");
-                Messages.Message("目标地图不存在（可能已销毁或未加载）", MessageTypeDefOf.RejectInput);
+                Messages.Message("BetterCommands.CameraTargetMapNotFoundRefusion".Translate(), MessageTypeDefOf.RejectInput);
                 return false;
             }
 

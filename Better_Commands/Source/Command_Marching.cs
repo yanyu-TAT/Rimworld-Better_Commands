@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using BetterCommands.Core;
+using RimWorld;
 using System.Security.Cryptography;
 using UnityEngine;
 using Verse;
@@ -14,11 +15,10 @@ namespace BetterCommands.Commands
 
         public Command_Marching()
         {
-            // 设置标签、描述和图标（之后需添加翻译文件）
-            this.defaultLabel = "行军";
-            this.defaultDesc = "保持警戒前进，有敌人进入范围时原地停止并攻击";
+            // 设置标签、描述和图标
+            this.defaultLabel = "BetterCommands.MarchingLabel".Translate();
+            this.defaultDesc = "BetterCommands.MarchingDescription".Translate();
             this.icon = iconTexture;
-            //this.icon = BaseContent.BadTex; // 占位图标，之后替换
         }
 
         public override void ProcessInput(Event ev)
@@ -36,7 +36,7 @@ namespace BetterCommands.Commands
 
                 if (!drafetdPawns.Any())
                 {
-                    Messages.Message("请至少选择一个已征召的角色以执行行军命令。", MessageTypeDefOf.RejectInput);
+                    Messages.Message("BetterCommands.MarchingNoValidPawnRefusion".Translate(), MessageTypeDefOf.RejectInput);
                     return false;
                 }
 
@@ -44,7 +44,7 @@ namespace BetterCommands.Commands
                 {
                     if (!pawn.CanReach(target.Cell, PathEndMode.OnCell, Danger.Deadly))
                     {
-                        Messages.Message($"角色 {pawn.Name} 无法到达目标位置。", MessageTypeDefOf.RejectInput);
+                        Messages.Message(Helper.Translate("BetterCommands.MarchingNoPathRefusion", ("pawnName", pawn.Name)), MessageTypeDefOf.RejectInput);
                         return false;
                     }
                 }
@@ -69,7 +69,7 @@ namespace BetterCommands.Commands
 
             if ( !draftedPawns.Any() )
             {
-                Messages.Message("没有选中的已征召单位。", MessageTypeDefOf.RejectInput);
+                Messages.Message("BetterCommands.MarchingNoValidPawnRefusion".Translate(), MessageTypeDefOf.RejectInput);
                 return;
             }
 

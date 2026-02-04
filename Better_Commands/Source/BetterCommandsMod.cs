@@ -17,6 +17,7 @@ namespace BetterCommands.Core
         public static Harmony harmonyInstance;
 
         public static SettingHandle<GroupShortcutMode> groupShortcutSettingHandle;
+        public static SettingHandle<bool> autoDraftOptionHandle;
 
         public override string ModIdentifier => "yanyu.bettercommands";
 
@@ -53,23 +54,43 @@ namespace BetterCommands.Core
         private void RegisterSettings()
         {
             groupShortcutSettingHandle = Settings.GetHandle<GroupShortcutMode>(
-                "GroupShortcutMode",
-                "编组快捷键模式",
-                "控制组合键与原版快捷单键的交互方式",
+                "BetterCommands.GroupShortcutMode",
+                "BetterCommands.GroupShortcutModeTitle".Translate(),
+                "BetterCommands.GroupShortcutModeDescription".Translate(),
                 GroupShortcutMode.Compact
             );
-
             groupShortcutSettingHandle.CustomDrawerHeight = 70f;
-            groupShortcutSettingHandle.Description =
-                "• 兼容模式: 组合键不触发原版功能（推荐）\n" +
-                "• 禁用模式: 冲突的键只触发原版功能，不触发编组功能（稳定）\n" +
-                "• 冲突模式: 组合键同时触发编组和原版功能";
+
+            autoDraftOptionHandle = Settings.GetHandle<bool>(
+                "BetterCommands.AutoDraftOption",
+                "BetterCommands.AutoDraftOptionTitle".Translate(),
+                "BetterCommands.AutoDraftOptionDescription".Translate(),
+                false
+            );
+            autoDraftOptionHandle.CustomDrawerHeight = 70f;
 
             Log.Message("BetterCommands: 设置项添加成功");
         }
 
         public static GroupShortcutMode CurrentGroupShortcutMode => 
             groupShortcutSettingHandle?.Value ?? GroupShortcutMode.Compact;
+        public static bool CurrentAutoDraftOption => 
+            autoDraftOptionHandle?.Value ?? false;
+    }
+
+    public class Helper
+    {
+        public static TaggedString Translate(string key, params (string, object)[] args)
+        {
+            String str = key.Translate();
+            if (args == null || args.Length == 0)
+            {
+                return str;
+            }
+
+            NamedArgument[] arguments = args.Select(t => new NamedArgument(t.Item2, t.Item1)).ToArray();
+            return str.Formatted(arguments);
+        }
     }
 }
 
@@ -89,7 +110,8 @@ namespace BetterCommands.Core
  * - [ ] 添加行军快捷键
  * - [ ] 加入近战行军索敌逻辑
  * - [x] 添加选中单位移出编组的功能
- * - [ ] 编写文本本地化逻辑
+ * - [x] 编写文本本地化逻辑
+ * - [x] 添加自动征召选项
  */
 
 /* Develop Log:
@@ -103,6 +125,7 @@ namespace BetterCommands.Core
  * 02/04 00:00 发现的问题基本均已修复且测试通过，待后续进行更多测试
  * 02/04 01:21 应用户要求添加了移出编组功能，测试通过
  * 02/04 01:50 绘制并添加了行军按钮icon，经测试保证了近战殖民者行军不会出错
+ * 02/04 16:04 添加了本地化翻译，添加了可配置的编组自动征召选项
  */
 
 /* Develop Plan:

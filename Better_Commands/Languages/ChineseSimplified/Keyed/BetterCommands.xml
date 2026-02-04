@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+	<BetterCommands.GroupShortcutModeTitle>编组快捷键模式</BetterCommands.GroupShortcutModeTitle>
+	<BetterCommands.GroupShortcutModeDescription>
+		·兼容模式：在按下组合键时禁用原版单键功能，保留单键的功能（推荐）
+		·禁用模式：禁用所有与原版单键功能冲突的组合键（将无法使用Fn键保存屏幕位置的功能）
+		·冲突模式：按下组合键将同时触发单键和组合键的功能（稳定，但难以使用）
+	</BetterCommands.GroupShortcutModeDescription>
+	<BetterCommands.GroupShortcutCompactMode>兼容模式</BetterCommands.GroupShortcutCompactMode>
+	<BetterCommands.GroupShortcutDisableMode>禁用模式</BetterCommands.GroupShortcutDisableMode>
+	<BetterCommands.GroupShortcutConflictMode>冲突模式</BetterCommands.GroupShortcutConflictMode>
+	<BetterCommands.AutoDraftOptionTitle>自动征召</BetterCommands.AutoDraftOptionTitle>
+	<BetterCommands.AutoDraftOptionDescription>使用快捷编组功能选中单位时是否自动使其进入征召状态</BetterCommands.AutoDraftOptionDescription>
+	<BetterCommands.GroupSavingDone>编组 {num} 已保存 {count} 个单位</BetterCommands.GroupSavingDone>
+	<BetterCommands.GroupingNoValidPawnRefusion>未选中可编组单位</BetterCommands.GroupingNoValidPawnRefusion>
+	<BetterCommands.GroupDeletingDone>编组 {num} 已移出 {count} 个单位</BetterCommands.GroupDeletingDone>
+	<BetterCommands.GroupDeletingNotContainRefusion>编组 {num} 未包含当前选中单位</BetterCommands.GroupDeletingNotContainRefusion>
+	<BetterCommands.CameraSavingDone>屏幕标记 {num} 已保存</BetterCommands.CameraSavingDone>
+	<BetterCommands.CameraTargetMapNotFoundRefusion>目标地图无法跳转（可能已销毁或未加载）</BetterCommands.CameraTargetMapNotFoundRefusion>
+	<BetterCommands.MarchingLabel>行军</BetterCommands.MarchingLabel>
+	<BetterCommands.MarchingDescription>进入行军状态前往目标地点，自动停止并攻击进入射程的目标，在目标失效后继续前进。</BetterCommands.MarchingDescription>
+</LanguageData>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+	<BetterCommands.GroupShortcutModeTitle>Group Shortcut Mode</BetterCommands.GroupShortcutModeTitle>
+	<BetterCommands.GroupShortcutModeDescription>
+		·Compatibility mode: Disable the original single key function when pressing the combination key, and retain the single key function (recommended)
+		·Disable mode: Disable all combination keys that conflict with the original single key function (the Fn key will not be able to save camera position saving function)
+		·Conflict mode: Pressing a combination key will trigger both single key and combination key functions simultaneously (stable, but difficult to use)
+	</BetterCommands.GroupShortcutModeDescription>
+	<BetterCommands.GroupShortcutCompactMode>Compact Mode</BetterCommands.GroupShortcutCompactMode>
+	<BetterCommands.GroupShortcutDisableMode>Disable Mode</BetterCommands.GroupShortcutDisableMode>
+	<BetterCommands.GroupShortcutConflictMode>Conflict Mode</BetterCommands.GroupShortcutConflictMode>
+	<BetterCommands.AutoDraftOptionTitle>Auto Draft</BetterCommands.AutoDraftOptionTitle>
+	<BetterCommands.AutoDraftOptionDescription>control if the quick grouping function automatically put a unit into draft mode when selecting it</BetterCommands.AutoDraftOptionDescription>
+	<BetterCommands.GroupSavingDone>Group {num} saved {count} units</BetterCommands.GroupSavingDone>
+	<BetterCommands.GroupingNoValidPawnRefusion>No groupable units selected</BetterCommands.GroupingNoValidPawnRefusion>
+	<BetterCommands.GroupDeletingDone>Group {num} removed {count} units</BetterCommands.GroupDeletingDone>
+	<BetterCommands.GroupDeletingNotContainRefusion>Group {num} doesn't contain any selected unit</BetterCommands.GroupDeletingNotContainRefusion>
+	<BetterCommands.CameraSavingDone>Camera position {num} saved</BetterCommands.CameraSavingDone>
+	<BetterCommands.CameraTargetMapNotFoundRefusion>Target map not found(maybe destroyed or not loaded)</BetterCommands.CameraTargetMapNotFoundRefusion>
+	<BetterCommands.MarchingLabel>March</BetterCommands.MarchingLabel>
+	<BetterCommands.MarchingDescription>Enter marching mode to reach the target location, automatically stop and attack the target within range, and continue to move forward after the target fails.</BetterCommands.MarchingDescription>
+</LanguageData>

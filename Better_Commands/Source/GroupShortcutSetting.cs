@@ -5,11 +5,11 @@ namespace BetterCommands.Settings
 {
     public enum GroupShortcutMode
     {
-        [EnumDescription("兼容模式")]
+        [EnumDescription("BetterCommands.GroupShortcutCompactMode")]
         Compact,
-        [EnumDescription("禁用模式")]
+        [EnumDescription("BetterCommands.GroupShortcutDisableMode")]
         Disable,
-        [EnumDescription("冲突模式")]
+        [EnumDescription("BetterCommands.GroupShortcutConflictMode")]
         Conflict
     }
 
@@ -31,10 +31,10 @@ namespace BetterCommands.Settings
         {
             //Log.Message("[Better Commands] Checking group shortcut for keyNum: " + keyNum);
             var mode = CurrentGroupShortcutMode;
-            //99表示Fn键，始终处理
-            if ((keyNum >= 5 && keyNum <= 9) || keyNum == 0 || keyNum == 99) return true;
+            if ((keyNum >= 5 && keyNum <= 9) || keyNum == 0 ) return true;
 
-            if (keyNum >= 1 && keyNum <= 4)
+            //99表示Fn键，依据快捷键模式决定是否处理
+            if (keyNum >= 1 && keyNum <= 4 || keyNum == 99)
             {
                 return mode != GroupShortcutMode.Disable;
             }
