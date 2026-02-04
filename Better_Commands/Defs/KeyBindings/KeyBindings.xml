@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<KeyBindingCategoryDef>
+		<defName>BetterCommands</defName>
+		<label>Better Commands</label>
+		<description>BetterCommands.KeyBindingCategoryDescription</description>
+	</KeyBindingCategoryDef>
+
+	<KeyBindingDef>
+		<defName>BetterCommands_Marching</defName>
+		<category>BetterCommands</category>
+		<label>BetterCommands.MarchingLabel</label>
+		<description>BetterCommands.MarchingDescription</description>
+		<defaultKeyCodeA>M</defaultKeyCodeA>
+		<defaultKeyCodeB>None</defaultKeyCodeB>
+	</KeyBindingDef>
+</Defs>

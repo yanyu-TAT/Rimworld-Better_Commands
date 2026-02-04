@@ -19,4 +19,5 @@
 	<BetterCommands.CameraTargetMapNotFoundRefusion>Target map not found(maybe destroyed or not loaded)</BetterCommands.CameraTargetMapNotFoundRefusion>
 	<BetterCommands.MarchingLabel>March</BetterCommands.MarchingLabel>
 	<BetterCommands.MarchingDescription>Enter marching mode to reach the target location, automatically stop and attack the target within range, and continue to move forward after the target fails.</BetterCommands.MarchingDescription>
+	<BetterCommands.KeyBindingCategoryDescription>Set shortcut keys for various commands of Better Commands</BetterCommands.KeyBindingCategoryDescription>
 </LanguageData>

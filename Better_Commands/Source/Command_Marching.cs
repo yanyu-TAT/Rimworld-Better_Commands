@@ -8,18 +8,32 @@ using Verse.Sound;
 
 namespace BetterCommands.Commands
 {
+    [StaticConstructorOnStartup]
     public class Command_Marching : Command_Action
     {
+        private static readonly KeyBindingDef keyBindingDef = DefDatabase<KeyBindingDef>.GetNamed("BetterCommands_Marching");
         private static readonly JobDef marchDef = DefDatabase<JobDef>.GetNamed("Marching");
         private static readonly JobDef shootDef = DefDatabase<JobDef>.GetNamed("BetterAttackStatic");
-        private static readonly Texture2D iconTexture = ContentFinder<Texture2D>.Get("Better_Commands/UI/Commands/MarchingCommandButton");
+        private static readonly Texture2D iconTexture;
 
+        static Command_Marching()
+        {
+            iconTexture = ContentFinder<Texture2D>.Get("Better_Commands/UI/Commands/MarchingCommandButton");
+        }
         public Command_Marching()
         {
             // 设置标签、描述和图标
             this.defaultLabel = "BetterCommands.MarchingLabel".Translate();
             this.defaultDesc = "BetterCommands.MarchingDescription".Translate();
             this.icon = iconTexture;
+            this.hotKey = keyBindingDef;
+        }
+
+        public override GizmoResult GizmoOnGUI(Vector2 topLeft, float maxWidth, GizmoRenderParms parms)
+        {
+            GizmoResult result =  base.GizmoOnGUI(topLeft, maxWidth, parms);
+            //修改gui
+            return result;
         }
 
         public override void ProcessInput(Event ev)

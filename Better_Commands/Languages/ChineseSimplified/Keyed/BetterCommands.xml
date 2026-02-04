@@ -19,4 +19,5 @@
 	<BetterCommands.CameraTargetMapNotFoundRefusion>目标地图无法跳转（可能已销毁或未加载）</BetterCommands.CameraTargetMapNotFoundRefusion>
 	<BetterCommands.MarchingLabel>行军</BetterCommands.MarchingLabel>
 	<BetterCommands.MarchingDescription>进入行军状态前往目标地点，自动停止并攻击进入射程的目标，在目标失效后继续前进。</BetterCommands.MarchingDescription>
+	<BetterCommands.KeyBindingCategoryDescription>为 Better Commands 的各种指令设置快捷键</BetterCommands.KeyBindingCategoryDescription>
 </LanguageData>
