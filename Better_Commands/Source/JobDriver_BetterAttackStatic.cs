@@ -18,7 +18,7 @@ namespace BetterCommands.Commands
                 if (!pawn.IsPlayerControlled || !pawn.Drafted)
                     return;
 
-                if (!this.job.playerInterruptedForced)
+                if (!this.job.playerInterruptedForced && condition != JobCondition.InterruptForced)
                 {
                     //如果没有后续工作则恢复行军状态
                     if (pawn.jobs.jobQueue.Count == 0)
