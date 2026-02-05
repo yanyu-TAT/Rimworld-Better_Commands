@@ -14,6 +14,7 @@ namespace BetterCommands.Commands
         private static readonly KeyBindingDef keyBindingDef = DefDatabase<KeyBindingDef>.GetNamed("BetterCommands_Marching");
         private static readonly JobDef marchDef = DefDatabase<JobDef>.GetNamed("Marching");
         private static readonly JobDef shootDef = DefDatabase<JobDef>.GetNamed("BetterAttackStatic");
+        private static readonly JobDef meleeDef = DefDatabase<JobDef>.GetNamed("BetterAttackMelee");
         private static readonly Texture2D iconTexture;
 
         static Command_Marching()
@@ -91,19 +92,18 @@ namespace BetterCommands.Commands
             //发布指令
             foreach (var pawn in draftedPawns)
             {
-                if (pawn.CurJobDef.defNameHash != shootDef.defNameHash)
-                {//如果单位未在进行攻击，则给予行军工作
-                    Job job = JobMaker.MakeJob(marchDef, target);
-                    pawn.jobs.StartJob(job, JobCondition.InterruptForced);
-                }
-                else
-                {//如果单位正在进行攻击，则覆盖其攻击工作
-                    LocalTargetInfo shootTarget = pawn.CurJob.targetA;
-                    Log.Message($"[BetterCommands] CurrentPos:{pawn.CurJob.targetB}, NewPos:{target}");
-                    Job job = JobMaker.MakeJob(shootDef, shootTarget, target);
-                    Log.Message($"[BetterCommands] Pos after override: {pawn.CurJob.targetB}");
-                    pawn.jobs.StartJob(job, JobCondition.InterruptForced);
-                }
+                //if (pawn.CurJobDef.defNameHash != shootDef.defNameHash)
+                //{
+                    //如果单位未在进行攻击，则给予行军工作
+                Job job = JobMaker.MakeJob(marchDef, target);
+                pawn.jobs.StartJob(job, JobCondition.InterruptForced);
+                //}
+                //else
+                //{//如果单位正在进行攻击，则覆盖其攻击工作
+                //    LocalTargetInfo shootTarget = pawn.CurJob.targetA;
+                //    Job job = JobMaker.MakeJob(shootDef, shootTarget, target);
+                //    pawn.jobs.StartJob(job, JobCondition.InterruptForced);
+                //}
             }
 
             SoundDefOf.Tick_High.PlayOneShotOnCamera();

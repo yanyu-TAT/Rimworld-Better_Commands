@@ -17,7 +17,9 @@
 	<BetterCommands.GroupDeletingNotContainRefusion>Group {num} doesn't contain any selected unit</BetterCommands.GroupDeletingNotContainRefusion>
 	<BetterCommands.CameraSavingDone>Camera position {num} saved</BetterCommands.CameraSavingDone>
 	<BetterCommands.CameraTargetMapNotFoundRefusion>Target map not found(maybe destroyed or not loaded)</BetterCommands.CameraTargetMapNotFoundRefusion>
+	<BetterCommands.MarchingNoValidPawnRefusion>No drafted and valid pawn selected</BetterCommands.MarchingNoValidPawnRefusion>
+	<BetterCommands.MarchingNoPathRefusion>Unit {pawnName} can't reach target position</BetterCommands.MarchingNoPathRefusion>
 	<BetterCommands.MarchingLabel>March</BetterCommands.MarchingLabel>
-	<BetterCommands.MarchingDescription>Enter marching mode to reach the target location, automatically stop and attack the target within range, and continue to move forward after the target fails.</BetterCommands.MarchingDescription>
+	<BetterCommands.MarchingDescription>Enter marching mode to reach the target location, automatically stop and use ranged weapon to attack the target within range or use melee weapon chase and attack nearby enemies, and continue to move forward after the target fails.</BetterCommands.MarchingDescription>
 	<BetterCommands.KeyBindingCategoryDescription>Set shortcut keys for various commands of Better Commands</BetterCommands.KeyBindingCategoryDescription>
 </LanguageData>

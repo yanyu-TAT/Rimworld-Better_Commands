@@ -1,4 +1,4 @@
-﻿using RimWorld;
+using RimWorld;
 using Verse;
 using Verse.AI;
 
@@ -6,7 +6,8 @@ namespace BetterCommands.Commands
 {
     public class JobDriver_Marching : JobDriver
     {
-        private static readonly JobDef rangedAttackDef = DefDatabase<JobDef>.GetNamed("BetterAttackStatic");
+        private static readonly JobDef shootDef = DefDatabase<JobDef>.GetNamed("BetterAttackStatic");
+        private static readonly JobDef meleeDef = DefDatabase<JobDef>.GetNamed("BetterAttackMelee");
 
         private const int CheckInterval = 60;
         public override bool TryMakePreToilReservations(bool errorOnFailed)
@@ -20,7 +21,7 @@ namespace BetterCommands.Commands
 
             moving.tickAction = () =>
             {
-                int ticker = Current.Game.tickManager.gameStartAbsTick;
+                int ticker = Find.TickManager.TicksGame;
                 Pawn actor = this.pawn;
                 if (actor == null || !actor.Spawned || !actor.Drafted)
                 {
@@ -34,34 +35,31 @@ namespace BetterCommands.Commands
                 }
 
                 TargetScanFlags flags = TargetScanFlags.None;
+                float range;
+                VerbProperties curProperties = actor.CurrentEffectiveVerb.verbProps;
 
-                if (!actor.CurrentEffectiveVerb.verbProps.IsMeleeAttack)
+                if (!curProperties.IsMeleeAttack)
                 {
-                    //远程攻击只锁定有视线的目标
+                    //远程攻击锁定有视线的威胁目标
                     flags = TargetScanFlags.NeedActiveThreat | TargetScanFlags.NeedLOSToAll;
-                } else
+                    range = curProperties.range;
+                } 
+                else
                 {
-                    //近战攻击锁定所有威胁目标（现不做实现）
-                    Log.Warning("[BetterCommands] Melee attack target scanning not implemented yet.");
-                    EndJobWith(JobCondition.Incompletable);
-                    return;
+                    //近战攻击锁定可抵达的威胁目标
+                    flags = TargetScanFlags.NeedActiveThreat | TargetScanFlags.NeedReachable;
+                    range = 30f; //只锁定30格内单位
                 }
 
-                IAttackTarget target = AttackTargetFinder.BestShootTargetFromCurrentPosition(
-                    actor,
-                    flags,
-                    null,
-                    minDistance: 0f,
-                    maxDistance: 9999f
-                );
+                IAttackTarget target = AttackTargetFinder.BestAttackTarget(actor, flags, maxDist: range);
 
                 if (target != null)
                 {
                     //发现目标，开始攻击
                     Log.Message($"[BetterCommand] Hostile detected");
-                    Job attackJob = CreateAttackJob(actor, target);
+                    Job attackJob = CreateAttackJob(actor, target, this.job.targetA);
                     if (attackJob != null)
-                        actor.jobs.StartJob(attackJob, JobCondition.InterruptOptional);
+                        actor.jobs.StartJob(attackJob, JobCondition.InterruptForced);
                     return;
                 }
             };
@@ -70,7 +68,7 @@ namespace BetterCommands.Commands
         }
 
         // 创建攻击任务
-        private Job CreateAttackJob(Pawn pawn, IAttackTarget target)
+        internal static Job CreateAttackJob(Pawn pawn, IAttackTarget target, LocalTargetInfo pos)
         {
             Thing thing = target?.Thing;
             if(thing == null || !thing.Spawned)
@@ -90,13 +88,13 @@ namespace BetterCommands.Commands
             if (verb.verbProps.IsMeleeAttack)
             {
                 //近战攻击
-                Log.Warning("[BetterCommands] Melee attack job creation not implemented yet.");
-                return null;
+                Job job = JobMaker.MakeJob(meleeDef, thing, null, pos);
+                return job;
             }
             else
             {
                 //远程攻击
-                Job job = JobMaker.MakeJob(rangedAttackDef, thing, this.job.targetA);
+                Job job = JobMaker.MakeJob(shootDef, thing, pos);
                 job.endIfCantShootTargetFromCurPos = true;
                 return job;
             }

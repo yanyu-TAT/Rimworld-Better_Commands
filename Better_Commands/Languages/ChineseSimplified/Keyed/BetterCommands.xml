@@ -17,7 +17,9 @@
 	<BetterCommands.GroupDeletingNotContainRefusion>编组 {num} 未包含当前选中单位</BetterCommands.GroupDeletingNotContainRefusion>
 	<BetterCommands.CameraSavingDone>屏幕标记 {num} 已保存</BetterCommands.CameraSavingDone>
 	<BetterCommands.CameraTargetMapNotFoundRefusion>目标地图无法跳转（可能已销毁或未加载）</BetterCommands.CameraTargetMapNotFoundRefusion>
+	<BetterCommands.MarchingNoValidPawnRefusion>没有选中已征召的可用单位</BetterCommands.MarchingNoValidPawnRefusion>
+	<BetterCommands.MarchingNoPathRefusion>单位 {pawnName} 无法抵达目标地点</BetterCommands.MarchingNoPathRefusion>
 	<BetterCommands.MarchingLabel>行军</BetterCommands.MarchingLabel>
-	<BetterCommands.MarchingDescription>进入行军状态前往目标地点，自动停止并攻击进入射程的目标，在目标失效后继续前进。</BetterCommands.MarchingDescription>
+	<BetterCommands.MarchingDescription>进入行军状态前往目标地点，自动停止并使用远程武器攻击进入射程的目标或使用近战武器自动追击附近的单位，在目标失效后继续前进。</BetterCommands.MarchingDescription>
 	<BetterCommands.KeyBindingCategoryDescription>为 Better Commands 的各种指令设置快捷键</BetterCommands.KeyBindingCategoryDescription>
 </LanguageData>
