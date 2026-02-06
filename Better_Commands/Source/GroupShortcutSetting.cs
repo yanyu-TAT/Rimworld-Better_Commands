@@ -1,25 +1,17 @@
 ﻿using System;
-using Verse;
+using System.ComponentModel;
+
 
 namespace BetterCommands.Settings
 {
     public enum GroupShortcutMode
     {
-        [EnumDescription("BetterCommands.GroupShortcutCompactMode")]
+        [Description("BetterCommands.GroupShortcutCompactMode")]
         Compact,
-        [EnumDescription("BetterCommands.GroupShortcutDisableMode")]
+        [Description("BetterCommands.GroupShortcutDisableMode")]
         Disable,
-        [EnumDescription("BetterCommands.GroupShortcutConflictMode")]
+        [Description("BetterCommands.GroupShortcutConflictMode")]
         Conflict
-    }
-
-    public class EnumDescriptionAttribute : Attribute
-    {
-        public string Description { get; }
-        public EnumDescriptionAttribute(string description = null)
-        {
-            Description = description;
-        }
     }
 
     public static class GroupSettingsUtility

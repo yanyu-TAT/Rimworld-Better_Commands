@@ -4,8 +4,6 @@
  */
 
 using RimWorld;
-using System;
-using System.Collections.Generic;
 using Verse;
 using Verse.Sound;
 
@@ -209,7 +207,7 @@ namespace BetterCommands.Core
 
             foreach (Pawn pawn in map.mapPawns.AllPawns)
             {
-                if (pawn.Spawned && pawn.Faction == Faction.OfPlayer)
+                if (pawn.Spawned && pawn.Faction == Faction.OfPlayer && !pawn.IsAnimal)
                 {
                     yield return pawn;
                 }
@@ -238,6 +236,19 @@ namespace BetterCommands.Core
                 }
             }
             return cnt;
+        }
+
+        //向编组添加单个殖民者
+        public bool AddToGroup(int num, Pawn pawn)
+        {
+            if (num < 0 || num >= 10)
+            {
+                Log.Error("[Better Commands] Group number out of range.");
+                return false;
+            }
+
+            groupList[num].Add(pawn.thingIDNumber);
+            return true;
         }
 
         //保存屏幕编组

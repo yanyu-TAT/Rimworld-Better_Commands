@@ -28,4 +28,15 @@
 	<BetterCommands.MarchingDetectRangeDescription>近战单位只会对在该半径范围内敌方单位进行追击</BetterCommands.MarchingDetectRangeDescription>
 	<BetterCommands.MarchingChasingRangeTitle>近战单位最大追击距离</BetterCommands.MarchingChasingRangeTitle>
 	<BetterCommands.MarchingChasingRangeDescription>近战单位在偏离路线距离或与追击目标的距离超过此数值时会放弃追击</BetterCommands.MarchingChasingRangeDescription>
+	<BetterCommands.GroupingTabTitle>编组管理</BetterCommands.GroupingTabTitle>
+	<BetterCommands.GroupingTabGroupLabel>编组 {num}</BetterCommands.GroupingTabGroupLabel>
+	<BetterCommands.GroupingTabGroupLabelExtra>（{count} 个单位）</BetterCommands.GroupingTabGroupLabelExtra>
+	<BetterCommands.GroupingTabGroupFoldUp>收起</BetterCommands.GroupingTabGroupFoldUp>
+	<BetterCommands.GroupingTabGroupExpand>展开</BetterCommands.GroupingTabGroupExpand>
+	<BetterCommands.GroupingTabGroupDelete>删除</BetterCommands.GroupingTabGroupDelete>
+	<BetterCommands.GroupingTabGroupDeleteConfirmWindow>确定要删除编组 {num} 吗？</BetterCommands.GroupingTabGroupDeleteConfirmWindow>
+	<BetterCommands.Confirm>确认</BetterCommands.Confirm>
+	<BetterCommands.Cancel>取消</BetterCommands.Cancel>
+	<BetterCommands.GroupingTabGroupSelect>选中</BetterCommands.GroupingTabGroupSelect>
+	<BetterCommands.GroupingTabNoValidPawnToAdd>无可添加单位</BetterCommands.GroupingTabNoValidPawnToAdd>
 </LanguageData>

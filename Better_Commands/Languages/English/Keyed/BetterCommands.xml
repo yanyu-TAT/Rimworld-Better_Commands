@@ -28,4 +28,15 @@
 	<BetterCommands.MarchingDetectRangeDescription>Melee units will only chase enemies within this radius when marching.</BetterCommands.MarchingDetectRangeDescription>
 	<BetterCommands.MarchingChasingRangeTitle>Melee Units Chasing Range</BetterCommands.MarchingChasingRangeTitle>
 	<BetterCommands.MarchingChasingRangeDescription>Melee units will abandon chase when the distance deviates from the marching route or the distance to the chasing target exceeds this value.</BetterCommands.MarchingChasingRangeDescription>
+	<BetterCommands.GroupingTabTitle>Group Manage</BetterCommands.GroupingTabTitle>
+	<BetterCommands.GroupingTabGroupLabel>Group {num}</BetterCommands.GroupingTabGroupLabel>
+	<BetterCommands.GroupingTabGroupLabelExtra>({count} units)</BetterCommands.GroupingTabGroupLabelExtra>
+	<BetterCommands.GroupingTabGroupFoldUp>Fold up</BetterCommands.GroupingTabGroupFoldUp>
+	<BetterCommands.GroupingTabGroupExpand>Expand</BetterCommands.GroupingTabGroupExpand>
+	<BetterCommands.GroupingTabGroupDelete>Delete</BetterCommands.GroupingTabGroupDelete>
+	<BetterCommands.GroupingTabGroupDeleteConfirmWindow>Are you sure to delete group {num} ?</BetterCommands.GroupingTabGroupDeleteConfirmWindow>
+	<BetterCommands.Confirm>Confirm</BetterCommands.Confirm>
+	<BetterCommands.Cancel>Cancel</BetterCommands.Cancel>
+	<BetterCommands.GroupingTabGroupSelect>Select</BetterCommands.GroupingTabGroupSelect>
+	<BetterCommands.GroupingTabNoValidPawnToAdd>No valid pawn to add.</BetterCommands.GroupingTabNoValidPawnToAdd>
 </LanguageData>

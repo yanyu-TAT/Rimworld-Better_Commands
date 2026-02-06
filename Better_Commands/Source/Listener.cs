@@ -60,7 +60,7 @@ namespace BetterCommands.Core
                         {
                             //Verse.Log.Message($"保存编组 {i}");
                             List<Pawn> selectedPawns = Find.Selector.SelectedPawns
-                                .Where(p => p.Faction == Faction.OfPlayer)
+                                .Where(p => p.Faction == Faction.OfPlayer && !p.IsAnimal)
                                 .ToList();
 
                             if (selectedPawns.Count != 0)
@@ -78,7 +78,7 @@ namespace BetterCommands.Core
                         //shift + 数字键
                         if (shiftPressed && !ctrlPressed && !altPressed)
                         {
-                            //Verse.Log.Message($"选中编组 {i}");
+                            Verse.Log.Message($"选中编组 {i}");
                             groupData.SelectGroup(i);
                             Event.current?.Use();
                             return;

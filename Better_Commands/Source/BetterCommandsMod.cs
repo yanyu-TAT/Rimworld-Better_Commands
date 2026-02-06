@@ -154,14 +154,15 @@ namespace BetterCommands.Core
  * - [x] 编写文本本地化逻辑
  * - [x] 添加自动征召选项
  * - [x] 添加行军指令相关的设置选项（检测间隔，索敌范围，追击距离等）
- * - [ ] 添加编组可视化ui
+ * - [x] 添加编组可视化ui
  * - [x] 扩展GroupData类功能
- * - [ ] 添加MainButtonDef
- * - [ ] 实现MainTabWindow_Groups以及MainButtonWorker
- * - [ ] 实现展开区的横向滚动和成员卡片（头像+名字+移出按钮）
- * - [ ] 实现展开区的添加按钮和FloatMenu添加
- * - [ ] 补充本地化
- * - [ ] 测试编组ui
+ * - [x] 添加MainButtonDef
+ * - [x] 实现MainTabWindow_Groups
+ * - [x] 实现展开区的横向滚动和成员卡片（头像+名字+移出按钮）
+ * - [x] 实现展开区的添加按钮和FloatMenu添加
+ * - [x] 补充本地化
+ * - [x] 测试编组ui
+ * - [ ] ui优化
  */
 
 /* Develop Log:
@@ -180,6 +181,7 @@ namespace BetterCommands.Core
  * 02/05 03:53 通过KeyBinding添加了行军命令的快捷键
  * 02/05 23:34 基本完成了近战单位行军的逻辑，测试通过，有待后续更多测试
  * 02/06 15:13 添加了行军相关的设置选项，测试通过；着手制作编组ui
+ * 02/06 20:33 编组ui界面基本完成，有待更多测试
  */
 
 /* Develop Plan:
@@ -187,6 +189,6 @@ namespace BetterCommands.Core
  * 屏幕快捷编组   - Done
  * 移动并攻击     - Done
  * 添加翻译文件   - Done
- * 编组管理UI
+ * 编组管理UI     - Done
  * 就近寻找掩体
  */
