@@ -16,8 +16,16 @@ namespace BetterCommands.Core
 
         public static Harmony harmonyInstance;
 
+        //组合键设置
         public static SettingHandle<GroupShortcutMode> groupShortcutSettingHandle;
+        //自动征召设置
         public static SettingHandle<bool> autoDraftOptionHandle;
+        //行军检测间隔设置
+        public static SettingHandle<int> marchingDetectIntervalHandle;
+        //行军近战索敌范围设置
+        public static SettingHandle<int> marchingDetectRangeHandle;
+        //行军近战追击距离设置
+        public static SettingHandle<int> marchingChasingRangeHandle;
 
         public override string ModIdentifier => "yanyu.bettercommands";
 
@@ -69,6 +77,30 @@ namespace BetterCommands.Core
             );
             autoDraftOptionHandle.CustomDrawerHeight = 70f;
 
+            marchingDetectIntervalHandle = Settings.GetHandle<int>(
+                "BetterCommands.MarchingDetectInterval",
+                "BetterCommands.MarchingDetectIntervalTitle".Translate(),
+                "BetterCommands.MarchingDetectIntervalDescription".Translate(),
+                60
+            );
+            marchingDetectIntervalHandle.CustomDrawerHeight = 70f;
+
+            marchingDetectRangeHandle = Settings.GetHandle<int>(
+                "BetterCommands.MarchingDetectRange",
+                "BetterCommands.MarchingDetectRangeTitle".Translate(),
+                "BetterCommands.MarchingDetectRangeDescription".Translate(),
+                30
+            );
+            marchingDetectRangeHandle.CustomDrawerHeight = 70f;
+
+            marchingChasingRangeHandle = Settings.GetHandle<int>(
+                "BetterCommands.MarchingChasingRange",
+                "BetterCommands.MarchingChasingRangeTitle".Translate(),
+                "BetterCommands.MarchingChasingRangeDescription".Translate(),
+                30
+            );
+            marchingChasingRangeHandle.CustomDrawerHeight = 70f;
+
             Log.Message("BetterCommands: 设置项添加成功");
         }
 
@@ -76,6 +108,15 @@ namespace BetterCommands.Core
             groupShortcutSettingHandle?.Value ?? GroupShortcutMode.Compact;
         public static bool CurrentAutoDraftOption => 
             autoDraftOptionHandle?.Value ?? false;
+
+        public static int CurrentMarchingDetectInterval =>
+            marchingDetectIntervalHandle?.Value ?? 60;
+
+        public static int CurrentMarchingDetectRange =>
+            marchingDetectRangeHandle?.Value ?? 30;
+
+        public static int CurrentMarchingChasingRange =>
+            marchingChasingRangeHandle?.Value ?? 30;
     }
 
     public class Helper
@@ -112,7 +153,15 @@ namespace BetterCommands.Core
  * - [x] 添加选中单位移出编组的功能
  * - [x] 编写文本本地化逻辑
  * - [x] 添加自动征召选项
+ * - [x] 添加行军指令相关的设置选项（检测间隔，索敌范围，追击距离等）
  * - [ ] 添加编组可视化ui
+ * - [x] 扩展GroupData类功能
+ * - [ ] 添加MainButtonDef
+ * - [ ] 实现MainTabWindow_Groups以及MainButtonWorker
+ * - [ ] 实现展开区的横向滚动和成员卡片（头像+名字+移出按钮）
+ * - [ ] 实现展开区的添加按钮和FloatMenu添加
+ * - [ ] 补充本地化
+ * - [ ] 测试编组ui
  */
 
 /* Develop Log:
@@ -130,6 +179,7 @@ namespace BetterCommands.Core
  * 02/05 03:18 修正了行军修改目标地点的逻辑，测试通过
  * 02/05 03:53 通过KeyBinding添加了行军命令的快捷键
  * 02/05 23:34 基本完成了近战单位行军的逻辑，测试通过，有待后续更多测试
+ * 02/06 15:13 添加了行军相关的设置选项，测试通过；着手制作编组ui
  */
 
 /* Develop Plan:

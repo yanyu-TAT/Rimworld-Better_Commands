@@ -5,7 +5,7 @@ namespace BetterCommands.Commands
 {
     //TargetA - 攻击目标
     //TargetB - 行军目标
-    public class JobDriver_BetterAttakStatic : JobDriver_AttackStatic
+    public class JobDriver_BetterAttackStatic : JobDriver_AttackStatic
     {
         private static readonly JobDef marchDef = DefDatabase<JobDef>.GetNamed("Marching");
 

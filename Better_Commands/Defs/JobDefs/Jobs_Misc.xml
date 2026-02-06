@@ -13,7 +13,7 @@
 	</JobDef>
 	<JobDef>
 		<defName>BetterAttackStatic</defName>
-		<driverClass>BetterCommands.Commands.JobDriver_BetterAttakStatic</driverClass>
+		<driverClass>BetterCommands.Commands.JobDriver_BetterAttackStatic</driverClass>
 		<reportString>Shooting TargetA</reportString>
 		<alwaysShowWeapon>true</alwaysShowWeapon>
 		<casualInterruptible>false</casualInterruptible>

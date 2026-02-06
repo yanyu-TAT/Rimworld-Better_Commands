@@ -108,37 +108,44 @@ namespace BetterCommands.Core
             return true;
         }
 
-        //选中编组
-        public bool SelectGroup(int num)
+        //获取编组成员（当前地图内）
+        public IEnumerable<Pawn> GetGroupMembers(int num)
         {
-            if (num < 0 || num >= 10) { 
+            if (num < 0 || num >= 10)
+            {
                 Log.Error("[Better Commands] Group number out of range.");
-                return false; 
+                yield break;
             }
 
             List<int> ids = groupList[num];
             if (ids == null || ids.Count == 0)
             {
                 //Verse.Log.Message($"Group {num} is empty.");
-                return false;
+                yield break;
             }
 
             Map map = Find.CurrentMap;
-            if (map == null) { 
+            if (map == null)
+            {
                 Log.Error("[Better Commands] No current map found.");
-                return false; 
+                yield break;
             }
 
-            List<Pawn> pawnsToSelect = new List<Pawn>();
             foreach (var id in ids)
             {
                 Pawn pawn = map.mapPawns.AllPawns.Find(p => p.thingIDNumber == id && p.Spawned && p.Faction == Faction.OfPlayer);
                 if (pawn != null)
                 {
-                    pawnsToSelect.Add(pawn);
+                    yield return pawn;
                     //Verse.Log.Message($"Selected Pawn {pawn.Name} from group {num}");
                 }
             }
+        }
+
+        //选中编组
+        public bool SelectGroup(int num)
+        {
+            List<Pawn> pawnsToSelect = GetGroupMembers(num).ToList();
             if (pawnsToSelect.Count > 0)
             {
                 Find.Selector.ClearSelection();
@@ -171,9 +178,42 @@ namespace BetterCommands.Core
             }
             else
             {
-                //Verse.Log.Message($"No valid pawns found in group {num} to select.");
+                //Log.Warning($"No valid pawns found in group {num} to select.");
+                return false;
             }
             return true;
+        }
+
+        //删除整个编组
+        public bool DeleteGroup(int num)
+        {
+            if (num < 0 || num >= 10)
+            {
+                Log.Error("[Better Commands] Group number out of range.");
+                return false;
+            }
+
+            groupList[num].Clear();
+            return true;
+        }
+
+        //获取当前地图内的合法编组目标
+        public IEnumerable<Pawn> getValidPawns()
+        {
+            Map map = Find.CurrentMap;
+            if (map == null)
+            {
+                Log.Error("[Better Commands] No current map found.");
+                yield break;
+            }
+
+            foreach (Pawn pawn in map.mapPawns.AllPawns)
+            {
+                if (pawn.Spawned && pawn.Faction == Faction.OfPlayer)
+                {
+                    yield return pawn;
+                }
+            }
         }
 
         //移出编组

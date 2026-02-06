@@ -1,3 +1,4 @@
+using BetterCommands.Core;
 using RimWorld;
 using Verse;
 using Verse.AI;
@@ -9,7 +10,11 @@ namespace BetterCommands.Commands
         private static readonly JobDef shootDef = DefDatabase<JobDef>.GetNamed("BetterAttackStatic");
         private static readonly JobDef meleeDef = DefDatabase<JobDef>.GetNamed("BetterAttackMelee");
 
-        private const int CheckInterval = 60;
+        private static int CheckInterval =>
+            BetterCommandsMod.CurrentMarchingDetectInterval;
+
+        private static int MeleeDetectRange =>
+            BetterCommandsMod.CurrentMarchingDetectRange;
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             return true;
@@ -48,7 +53,7 @@ namespace BetterCommands.Commands
                 {
                     //近战攻击锁定可抵达的威胁目标
                     flags = TargetScanFlags.NeedActiveThreat | TargetScanFlags.NeedReachable;
-                    range = 30f; //只锁定30格内单位
+                    range = MeleeDetectRange;
                 }
 
                 IAttackTarget target = AttackTargetFinder.BestAttackTarget(actor, flags, maxDist: range);

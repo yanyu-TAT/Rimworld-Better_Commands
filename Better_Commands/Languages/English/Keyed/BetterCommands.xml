@@ -2,15 +2,15 @@
 <LanguageData>
 	<BetterCommands.GroupShortcutModeTitle>Group Shortcut Mode</BetterCommands.GroupShortcutModeTitle>
 	<BetterCommands.GroupShortcutModeDescription>
-		·Compatibility mode: Disable the original single key function when pressing the combination key, and retain the single key function (recommended)
-		·Disable mode: Disable all combination keys that conflict with the original single key function (the Fn key will not be able to save camera position saving function)
-		·Conflict mode: Pressing a combination key will trigger both single key and combination key functions simultaneously (stable, but difficult to use)
+		·Compatibility mode: Disable the original single key function when pressing the combination key, and retain the single key function. (recommended)
+		·Disable mode: Disable all combination keys that conflict with the original single key function (the Fn key will not be able to save camera position saving. function)
+		·Conflict mode: Pressing a combination key will trigger both single key and combination key functions simultaneously. (stable, but difficult to use)
 	</BetterCommands.GroupShortcutModeDescription>
 	<BetterCommands.GroupShortcutCompactMode>Compact Mode</BetterCommands.GroupShortcutCompactMode>
 	<BetterCommands.GroupShortcutDisableMode>Disable Mode</BetterCommands.GroupShortcutDisableMode>
 	<BetterCommands.GroupShortcutConflictMode>Conflict Mode</BetterCommands.GroupShortcutConflictMode>
 	<BetterCommands.AutoDraftOptionTitle>Auto Draft</BetterCommands.AutoDraftOptionTitle>
-	<BetterCommands.AutoDraftOptionDescription>control if the quick grouping function automatically put a unit into draft mode when selecting it</BetterCommands.AutoDraftOptionDescription>
+	<BetterCommands.AutoDraftOptionDescription>Control if the quick grouping function automatically put a unit into draft mode when selecting it.</BetterCommands.AutoDraftOptionDescription>
 	<BetterCommands.GroupSavingDone>Group {num} saved {count} units</BetterCommands.GroupSavingDone>
 	<BetterCommands.GroupingNoValidPawnRefusion>No groupable units selected</BetterCommands.GroupingNoValidPawnRefusion>
 	<BetterCommands.GroupDeletingDone>Group {num} removed {count} units</BetterCommands.GroupDeletingDone>
@@ -22,4 +22,10 @@
 	<BetterCommands.MarchingLabel>March</BetterCommands.MarchingLabel>
 	<BetterCommands.MarchingDescription>Enter marching mode to reach the target location, automatically stop and use ranged weapon to attack the target within range or use melee weapon chase and attack nearby enemies, and continue to move forward after the target fails.</BetterCommands.MarchingDescription>
 	<BetterCommands.KeyBindingCategoryDescription>Set shortcut keys for various commands of Better Commands</BetterCommands.KeyBindingCategoryDescription>
+	<BetterCommands.MarchingDetectIntervalTitle>Marching Units Detecting Interval</BetterCommands.MarchingDetectIntervalTitle>
+	<BetterCommands.MarchingDetectIntervalDescription>Marching units' interval of detecting enemies. Low values may lead to preformance burden.</BetterCommands.MarchingDetectIntervalDescription>
+	<BetterCommands.MarchingDetectRangeTitle>Melee Units Detecting Range</BetterCommands.MarchingDetectRangeTitle>
+	<BetterCommands.MarchingDetectRangeDescription>Melee units will only chase enemies within this radius when marching.</BetterCommands.MarchingDetectRangeDescription>
+	<BetterCommands.MarchingChasingRangeTitle>Melee Units Chasing Range</BetterCommands.MarchingChasingRangeTitle>
+	<BetterCommands.MarchingChasingRangeDescription>Melee units will abandon chase when the distance deviates from the marching route or the distance to the chasing target exceeds this value.</BetterCommands.MarchingChasingRangeDescription>
 </LanguageData>

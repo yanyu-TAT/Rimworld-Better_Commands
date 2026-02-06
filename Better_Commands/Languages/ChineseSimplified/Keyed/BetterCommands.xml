@@ -22,4 +22,10 @@
 	<BetterCommands.MarchingLabel>行军</BetterCommands.MarchingLabel>
 	<BetterCommands.MarchingDescription>进入行军状态前往目标地点，自动停止并使用远程武器攻击进入射程的目标或使用近战武器自动追击附近的单位，在目标失效后继续前进。</BetterCommands.MarchingDescription>
 	<BetterCommands.KeyBindingCategoryDescription>为 Better Commands 的各种指令设置快捷键</BetterCommands.KeyBindingCategoryDescription>
+	<BetterCommands.MarchingDetectIntervalTitle>行军单位检测间隔</BetterCommands.MarchingDetectIntervalTitle>
+	<BetterCommands.MarchingDetectIntervalDescription>行军中的单位检测敌人的时间间隔（tick），过低的数值可能造成性能负担</BetterCommands.MarchingDetectIntervalDescription>
+	<BetterCommands.MarchingDetectRangeTitle>近战单位行军索敌范围</BetterCommands.MarchingDetectRangeTitle>
+	<BetterCommands.MarchingDetectRangeDescription>近战单位只会对在该半径范围内敌方单位进行追击</BetterCommands.MarchingDetectRangeDescription>
+	<BetterCommands.MarchingChasingRangeTitle>近战单位最大追击距离</BetterCommands.MarchingChasingRangeTitle>
+	<BetterCommands.MarchingChasingRangeDescription>近战单位在偏离路线距离或与追击目标的距离超过此数值时会放弃追击</BetterCommands.MarchingChasingRangeDescription>
 </LanguageData>

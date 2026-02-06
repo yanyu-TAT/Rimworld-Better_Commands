@@ -1,3 +1,4 @@
+using BetterCommands.Core;
 using Verse;
 using Verse.AI;
 
@@ -9,8 +10,8 @@ namespace BetterCommands.Commands
     public class JobDriver_BetterAttackMelee : JobDriver_AttackMelee
     {
         private static readonly JobDef marchDef = DefDatabase<JobDef>.GetNamed("Marching");
-        private const int MAX_CHASE_Dist = 30; //最多偏离原路线的距离
-        private static readonly int MaxDistSquare = MAX_CHASE_Dist * MAX_CHASE_Dist;
+        private static int MaxDistSquare =>
+            BetterCommandsMod.CurrentMarchingChasingRange * BetterCommandsMod.CurrentMarchingChasingRange;
 
         private IntVec3 chaseStartPos;
         bool isChasing = false;
@@ -26,7 +27,7 @@ namespace BetterCommands.Commands
                     return;
 
                 if (!this.job.playerInterruptedForced && condition != JobCondition.InterruptForced)
-                {
+                { 
                     //如果没有后续工作则恢复行军状态
                     if (pawn.jobs.jobQueue.Count == 0)
                     {
