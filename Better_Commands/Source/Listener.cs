@@ -18,8 +18,14 @@ namespace BetterCommands.Core
     [HarmonyPatch("Update")]
     public static class Listener
     {
+        private const int DoubleClick_Time = 45; // 60帧/s
+
+        //用于阻止重复处理
         private static Dictionary<KeyCode, bool> keysProcessed = new();
         private static int lastFrame = -1;
+
+        //用于检测双击
+        private static Dictionary<KeyCode, int> lastClicked = new();
         public static void Postfix()
         {
             if (Current.Game == null)
@@ -34,6 +40,16 @@ namespace BetterCommands.Core
             {
                 lastFrame = Time.frameCount;
                 keysProcessed.Clear();
+            }
+
+            for (int i = 0; i <= 9; i++)
+            {
+                KeyCode key = KeyCode.Alpha0 + i;
+                if (lastClicked.ContainsKey(key) && Time.frameCount - lastClicked[key] >= DoubleClick_Time)
+                {
+                    lastClicked.Remove(key);
+                    groupData.SelectGroup(i);
+                }
             }
 
             bool ctrlPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
@@ -78,8 +94,17 @@ namespace BetterCommands.Core
                         //shift + 数字键
                         if (shiftPressed && !ctrlPressed && !altPressed)
                         {
-                            Verse.Log.Message($"选中编组 {i}");
-                            groupData.SelectGroup(i);
+                            Log.Message($"检测到按键: {key}");
+                            if (lastClicked.ContainsKey(key) && Time.frameCount - lastClicked[key] < DoubleClick_Time)
+                            {
+                                Log.Message($"[BetterCommands] lastKeyPressed : {i} : {Time.frameCount - lastClicked[key]}");
+                                groupData.JumpToGroupCenter(i);
+                                lastClicked.Remove(key);
+                            }
+                            else
+                            {
+                                lastClicked.Add(key, Time.frameCount);
+                            }
                             Event.current?.Use();
                             return;
                         }
@@ -121,7 +146,6 @@ namespace BetterCommands.Core
                 KeyCode key = KeyCode.F1 + i;
                 if (Input.GetKeyDown(key))
                 {
-                    //Log.Message($"检测到按键: {key}");
                     if (GroupSettingsUtility.ShouldHandleGroupShortcuts(99))
                     {
                         //ctrl + F1-F11

@@ -251,6 +251,26 @@ namespace BetterCommands.Core
             return true;
         }
 
+        //跳转到对应编组中心
+        public bool JumpToGroupCenter(int index)
+        {
+            List<Pawn> pawns = GetGroupMembers(index).ToList();
+            if(pawns == null || pawns.Count == 0) return false;
+
+            IntVec3 center = IntVec3.Zero;
+            foreach (var pawn in pawns)
+            {
+                center += pawn.Position;
+            }
+            center /= pawns.Count;
+
+            Map map = Find.CurrentMap;
+            if (map ==  null) return false;
+            CameraJumper.TryJump(center, map);
+
+            return true;
+        }
+
         //保存屏幕编组
         public bool SaveViewPortState(int index)
         {
