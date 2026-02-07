@@ -26,9 +26,11 @@ namespace BetterCommands.Core
         public static SettingHandle<int> marchingDetectRangeHandle;
         //行军近战追击距离设置
         public static SettingHandle<int> marchingChasingRangeHandle;
+        //编组管理入口可见性
+        public static SettingHandle<bool> groupingMainTabVisibilityHandle;
 
         public override string ModIdentifier => "yanyu.bettercommands";
-
+        
         public BetterCommandsMod() : base()
         {
             Instance = this;
@@ -101,6 +103,14 @@ namespace BetterCommands.Core
             );
             marchingChasingRangeHandle.CustomDrawerHeight = 70f;
 
+            groupingMainTabVisibilityHandle = Settings.GetHandle<bool>(
+                "BetterCommands.GroupingMainTabVisibility",
+                "BetterCommands.GroupingMainTabVisibilityTitle".Translate(),
+                "BetterCommands.GroupingMainTabVisibilityDescription".Translate(),
+                true
+            );
+            groupingMainTabVisibilityHandle.CustomDrawerHeight = 70f;
+
             Log.Message("BetterCommands: 设置项添加成功");
         }
 
@@ -117,6 +127,9 @@ namespace BetterCommands.Core
 
         public static int CurrentMarchingChasingRange =>
             marchingChasingRangeHandle?.Value ?? 30;
+
+        public static bool CurrentGroupingMainTabVisibility =>
+            groupingMainTabVisibilityHandle?.Value ?? true;
     }
 
     public class Helper
@@ -184,6 +197,7 @@ namespace BetterCommands.Core
  * 02/06 15:13 添加了行军相关的设置选项，测试通过；着手制作编组ui
  * 02/06 20:33 编组ui界面基本完成，有待更多测试
  * 02/06 18:57 添加了对shift + 双击0~9的检测：跳转到编组中心
+ * 02/06 21:10 添加了是否显示编组MainTab的设置选项
  */
 
 /* Develop Plan:

@@ -4,7 +4,7 @@
 		<defName>GroupingTab</defName>
 		<label>BetterCommands.GroupingTabLabel</label>
 		<description>BetterCommands.GroupingTabDescription</description>
-		<workerClass>Rimworld.MainButtonWorker_ToggleTab</workerClass>
+		<workerClass>BetterCommands.UI.MainButtonWorker_GroupingMainTab</workerClass>
 		<tabWindowClass>BetterCommands.UI.MainTabWindow_GroupingTab</tabWindowClass>
 		<order>20</order>
 		<validWithoutMap>false</validWithoutMap>

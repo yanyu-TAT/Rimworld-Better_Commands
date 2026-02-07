@@ -39,4 +39,6 @@
 	<BetterCommands.Cancel>Cancel</BetterCommands.Cancel>
 	<BetterCommands.GroupingTabGroupSelect>Select</BetterCommands.GroupingTabGroupSelect>
 	<BetterCommands.GroupingTabNoValidPawnToAdd>No valid pawn to add.</BetterCommands.GroupingTabNoValidPawnToAdd>
+	<BetterCommands.GroupingMainTabVisibilityTitle>Group Management UI</BetterCommands.GroupingMainTabVisibilityTitle>
+	<BetterCommands.GroupingMainTabVisibilityDescription>Visibility of entrance to the group management UI provided at the bottom of the screen</BetterCommands.GroupingMainTabVisibilityDescription>
 </LanguageData>

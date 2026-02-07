@@ -39,4 +39,6 @@
 	<BetterCommands.Cancel>取消</BetterCommands.Cancel>
 	<BetterCommands.GroupingTabGroupSelect>选中</BetterCommands.GroupingTabGroupSelect>
 	<BetterCommands.GroupingTabNoValidPawnToAdd>无可添加单位</BetterCommands.GroupingTabNoValidPawnToAdd>
+	<BetterCommands.GroupingMainTabVisibilityTitle>编组管理UI</BetterCommands.GroupingMainTabVisibilityTitle>
+	<BetterCommands.GroupingMainTabVisibilityDescription>是否在屏幕下方提供编组管理UI的入口</BetterCommands.GroupingMainTabVisibilityDescription>
 </LanguageData>
