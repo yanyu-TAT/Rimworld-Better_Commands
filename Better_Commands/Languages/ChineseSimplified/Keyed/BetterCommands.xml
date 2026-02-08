@@ -41,4 +41,7 @@
 	<BetterCommands.GroupingTabNoValidPawnToAdd>无可添加单位</BetterCommands.GroupingTabNoValidPawnToAdd>
 	<BetterCommands.GroupingMainTabVisibilityTitle>编组管理UI</BetterCommands.GroupingMainTabVisibilityTitle>
 	<BetterCommands.GroupingMainTabVisibilityDescription>是否在屏幕下方提供编组管理UI的入口</BetterCommands.GroupingMainTabVisibilityDescription>
+	<BetterCommands.SeekCoverLabel>寻找掩体</BetterCommands.SeekCoverLabel>
+	<BetterCommands.SeekCoverDescription>寻找附近的掩体躲避敌人射击</BetterCommands.SeekCoverDescription>
+	<BetterCommands.SeekCoverEnemyNotFoundRefusion>附近没有敌人，不需要掩体</BetterCommands.SeekCoverEnemyNotFoundRefusion>
 </LanguageData>

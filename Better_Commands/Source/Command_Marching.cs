@@ -1,6 +1,5 @@
 ﻿using BetterCommands.Core;
 using RimWorld;
-using System.Security.Cryptography;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -13,8 +12,8 @@ namespace BetterCommands.Commands
     {
         private static readonly KeyBindingDef keyBindingDef = DefDatabase<KeyBindingDef>.GetNamed("BetterCommands_Marching");
         private static readonly JobDef marchDef = DefDatabase<JobDef>.GetNamed("Marching");
-        private static readonly JobDef shootDef = DefDatabase<JobDef>.GetNamed("BetterAttackStatic");
-        private static readonly JobDef meleeDef = DefDatabase<JobDef>.GetNamed("BetterAttackMelee");
+        //private static readonly JobDef shootDef = DefDatabase<JobDef>.GetNamed("BetterAttackStatic");
+        //private static readonly JobDef meleeDef = DefDatabase<JobDef>.GetNamed("BetterAttackMelee");
         private static readonly Texture2D iconTexture;
 
         static Command_Marching()

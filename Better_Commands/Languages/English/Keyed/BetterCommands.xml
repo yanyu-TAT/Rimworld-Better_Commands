@@ -41,4 +41,7 @@
 	<BetterCommands.GroupingTabNoValidPawnToAdd>No valid pawn to add.</BetterCommands.GroupingTabNoValidPawnToAdd>
 	<BetterCommands.GroupingMainTabVisibilityTitle>Group Management UI</BetterCommands.GroupingMainTabVisibilityTitle>
 	<BetterCommands.GroupingMainTabVisibilityDescription>Visibility of entrance to the group management UI provided at the bottom of the screen</BetterCommands.GroupingMainTabVisibilityDescription>
+	<BetterCommands.SeekCoverLabel>Seek Cover</BetterCommands.SeekCoverLabel>
+	<BetterCommands.SeekCoverDescription>Seek nearby cover to avoid enemy fire</BetterCommands.SeekCoverDescription>
+	<BetterCommands.SeekCoverEnemyNotFoundRefusion>There are no enemies nearby. No need to take cover.</BetterCommands.SeekCoverEnemyNotFoundRefusion>
 </LanguageData>

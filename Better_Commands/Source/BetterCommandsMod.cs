@@ -177,6 +177,9 @@ namespace BetterCommands.Core
  * - [x] 测试编组ui
  * - [ ] ui优化
  * - [x] 添加对shift + 双击1~9的检测：跳转到编组中心
+ * - [x] 实现就近寻找掩体的指令
+ * - [x] 绘制icon和添加翻译
+ * - [ ] 制作宣传用gif
  */
 
 /* Develop Log:
@@ -198,6 +201,7 @@ namespace BetterCommands.Core
  * 02/06 20:33 编组ui界面基本完成，有待更多测试
  * 02/06 18:57 添加了对shift + 双击0~9的检测：跳转到编组中心
  * 02/06 21:10 添加了是否显示编组MainTab的设置选项
+ * 02/08 22:58 添加了就近寻找掩体的新指令及其icon，测试通过
  */
 
 /* Develop Plan:
@@ -206,5 +210,6 @@ namespace BetterCommands.Core
  * 移动并攻击     - Done
  * 添加翻译文件   - Done
  * 编组管理UI     - Done
- * 就近寻找掩体
+ * 就近寻找掩体   - Done
+ * 制作更多宣传
  */

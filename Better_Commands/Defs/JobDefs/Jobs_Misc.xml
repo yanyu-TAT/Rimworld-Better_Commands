@@ -24,6 +24,15 @@
 		<checkOverrideOnDamage>Never</checkOverrideOnDamage>
 	</JobDef>
 	<JobDef>
+		<defName>BetterGoto</defName>
+		<driverClass>Verse.AI.JobDriver_Goto</driverClass>
+		<reportString>Moving to cover.</reportString>
+		<alwaysShowWeapon>true</alwaysShowWeapon>
+		<casualInterruptible>false</casualInterruptible>
+		<checkOverrideOnDamage>Never</checkOverrideOnDamage>
+		<collideWithPawns>true</collideWithPawns>
+	</JobDef>
+	<JobDef>
 		<defName>BetterAttackMelee</defName>
 		<driverClass>BetterCommands.Commands.JobDriver_BetterAttackMelee</driverClass>
 		<reportString>Pursuiting TargetA</reportString>

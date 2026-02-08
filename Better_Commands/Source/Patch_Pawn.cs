@@ -18,6 +18,7 @@ namespace BetterCommands.Patches
             if (__instance.IsPlayerControlled && __instance.Drafted)
             {
                 yield return new Command_Marching();
+                yield return new Command_SeekCover();
             }
         }
     }
