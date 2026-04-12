@@ -10,7 +10,7 @@ namespace BetterCommands.UI
     public class MainTabWindow_GroupingTab : MainTabWindow
     {
         //窗口大小
-        public override UnityEngine.Vector2 RequestedTabSize => new Vector2(700f, 600f);
+        public override UnityEngine.Vector2 RequestedTabSize => new(700f, 600f);
 
         //UI相关常量
         private const float GroupRowHeight = 35f;
@@ -35,17 +35,17 @@ namespace BetterCommands.UI
             Widgets.Label(new Rect(0f, 0f, inRect.width, 40f), "BetterCommands.GroupingTabTitle".Translate());
             Text.Font = GameFont.Small;
 
-            Rect listRect = new Rect(0f, 45f, inRect.width, inRect.height - 45f);
+            Rect listRect = new(0f, 45f, inRect.width, inRect.height - 45f);
             DrawGroupList(listRect);
         }
 
         private void DrawGroupList(Rect outRect)
         {
             //计算总行高
-            float totalHeight = GroupRowHeight * 10 + selectedGorupIndex < 0 ? SelectedRowHeight : 0;
+            float totalHeight = GroupRowHeight * 10 + (selectedGorupIndex < 0 ? SelectedRowHeight : 0);
 
             //滚动视图区域
-            Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, totalHeight);
+            Rect viewRect = new(0f, 0f, outRect.width - 16f, totalHeight);
 
             //进行滚动
             Widgets.BeginScrollView(outRect, ref groupScrollPos, viewRect);
@@ -58,7 +58,7 @@ namespace BetterCommands.UI
 
                 if (i == selectedGorupIndex)
                 {
-                    DrawPawnIcons(new Rect(0f, curY, viewRect.width, SelectedRowHeight), i);
+                    DrawMemberIcons(new Rect(0f, curY, viewRect.width, SelectedRowHeight), i);
                     curY += SelectedRowHeight;
                 }
             }
@@ -72,15 +72,15 @@ namespace BetterCommands.UI
 
             //填充编组标签内容
             string groupLabel = Helper.Translate("BetterCommands.GroupingTabGroupLabel", ("num", index));
-            List<Pawn> pawns = groupData.GetGroupMembers(index).ToList();
-            if (pawns.Count > 0)
+            List<Thing> things = groupData.GetGroupMembers(index).ToList();
+            if (things.Count > 0)
             {
                 //若编组不为空则标记数量
-                groupLabel += Helper.Translate("BetterCommands.GroupingTabGroupLabelExtra", ("count", pawns.Count));
+                groupLabel += Helper.Translate("BetterCommands.GroupingTabGroupLabelExtra", ("count", things.Count));
             }
 
             //绘制编组标签
-            Rect labelRect = new Rect(rowRect.x + 10f, rowRect.y + 5f, 180f, 25f);
+            Rect labelRect = new(rowRect.x + 10f, rowRect.y + 5f, 180f, 25f);
             Widgets.Label(labelRect, groupLabel);
 
             //绘制按钮（从右到左）
@@ -89,7 +89,7 @@ namespace BetterCommands.UI
                 index ? 
                 "BetterCommands.GroupingTabGroupFoldUp".Translate() : 
                 "BetterCommands.GroupingTabGroupExpand".Translate();
-            Rect expandButtonRect = new Rect(rowRect.xMax - ButtonWidth / 2, rowRect.y + 5f, 80f, 25f);
+            Rect expandButtonRect = new(rowRect.xMax - ButtonWidth / 2, rowRect.y + 5f, 80f, 25f);
             if (Widgets.ButtonText(expandButtonRect, expandButtonLabel))
             {
                 if (selectedGorupIndex == index)
@@ -106,10 +106,10 @@ namespace BetterCommands.UI
             }
             //删除
             string deleteButtonLabel = "BetterCommands.GroupingTabGroupDelete".Translate();
-            Rect deleteButtonRect = new Rect(expandButtonRect.xMax - ButtonWidth, rowRect.y + 5f, 80f, 25f);
+            Rect deleteButtonRect = new(expandButtonRect.xMax - ButtonWidth, rowRect.y + 5f, 80f, 25f);
             if (Widgets.ButtonText(deleteButtonRect, deleteButtonLabel))
             {
-                if (pawns.Count > 0)
+                if (things.Count > 0)
                 {
                     //弹窗确认
                     Find.WindowStack.Add(new Dialog_MessageBox(
@@ -137,26 +137,26 @@ namespace BetterCommands.UI
             }
         }
 
-        private void DrawPawnIcons(Rect rowRect, int index)
+        private void DrawMemberIcons(Rect rowRect, int index)
         {
             //绘制背景
             Widgets.DrawBoxSolid(rowRect, new Color(0.1f, 0.1f, 0.1f, 0.5f));
 
             //获取成员列表
-            List<Pawn> groupMemebers = groupData.GetGroupMembers(index).ToList();
+            List<Thing> groupMemebers = groupData.GetGroupMembers(index).ToList();
 
             //计算横向滚动区域
             float totalIconsWidth = (groupMemebers.Count + 1.5f) * PawnIconSize; //预留添加按钮位置
-            Rect scrollViewRect = new Rect(rowRect.x, rowRect.y, totalIconsWidth, rowRect.height);
-            Rect visibleRect = new Rect(rowRect.x, rowRect.y, rowRect.width, rowRect.height);
+            Rect scrollViewRect = new(rowRect.x, rowRect.y, totalIconsWidth, rowRect.height);
+            Rect visibleRect = new(rowRect.x, rowRect.y, rowRect.width, rowRect.height);
 
             //进行横向滚动
             Widgets.BeginScrollView(visibleRect, ref selectedGroupScrollPos, scrollViewRect);
             float curX = 0f;
 
-            foreach (Pawn pawn in groupMemebers)
+            foreach (var thing in groupMemebers)
             {
-                DrawIconWithDelete(new Rect(curX, rowRect.y, PawnIconSize, rowRect.height), pawn, index);
+                DrawIconWithDelete(new Rect(curX, rowRect.y, PawnIconSize, rowRect.height), thing, index);
                 curX += PawnIconSize;
             }
 
@@ -164,12 +164,12 @@ namespace BetterCommands.UI
             Widgets.EndScrollView();
         }
 
-        private void DrawIconWithDelete(Rect iconRect, Pawn pawn, int index)
+        private void DrawIconWithDelete(Rect iconRect, Thing thing, int index)
         {
-            Widgets.ThingIcon(new Rect(iconRect.center.x - 24f, iconRect.y + 5f, 48f, 48f), pawn);
+            Widgets.ThingIcon(new Rect(iconRect.center.x - 24f, iconRect.y + 5f, 48f, 48f), thing);
 
             //绘制名字（截断处理）
-            string name = pawn.Name?.ToStringShort ?? "...";
+            string name = GetDisplayName(thing);
             if (name.Length > 4) name = name.Substring(0, 4) + "..";
             Rect nameRect = new(iconRect.x, iconRect.y + 55f, iconRect.width, 20f);
             Text.Anchor = TextAnchor.UpperCenter;
@@ -180,23 +180,34 @@ namespace BetterCommands.UI
             Rect deleteBtnRect = new Rect(iconRect.xMax - 20f, iconRect.y + 5f, 15f, 15f);
             if (Widgets.ButtonImage(deleteBtnRect, TexButton.Delete))
             {
-                List<Pawn> list = new();
-                list.Add(pawn);
+                List<Thing> list = new()
+                {
+                    thing
+                };
                 groupData.DeleteFromGroup(index, list);
             }
 
             //悬停显示全名
             if (Mouse.IsOver(iconRect))
             {
-                TooltipHandler.TipRegion(iconRect, pawn.Name.ToStringFull);
+                TooltipHandler.TipRegion(iconRect, GetDisplayName(thing));
             }
+        }
+
+        private string GetDisplayName(Thing thing)
+        {
+            if (thing is Pawn pawn)
+            {
+                return pawn.Name?.ToStringShort ?? "...";
+            }
+            return thing.LabelShortCap ?? thing.def?.label ?? "...";
         }
 
         private void DrawAddMemberButton(Rect buttonRect, int index)
         {
             List<FloatMenuOption> options = new();
-            List<Pawn> validPawns = groupData.getValidPawns().ToList();
-            List<Pawn> curGroupMembers = groupData.GetGroupMembers(index).ToList();
+            List<Pawn> validPawns = groupData.getValidPawns().ToList(); //获取当前地图上所有可用的Pawn（暂不支持获取炮塔等）
+            List<Thing> curGroupMembers = groupData.GetGroupMembers(index).ToList();
 
             foreach(Pawn pawn in validPawns)
             {

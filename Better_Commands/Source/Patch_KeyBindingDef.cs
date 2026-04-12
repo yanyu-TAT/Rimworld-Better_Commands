@@ -18,7 +18,6 @@ namespace BetterCommands.Patches
             if (Current.Game == null) return true;
 
             GroupShortcutMode groupShortcutMode = GroupSettingsUtility.CurrentGroupShortcutMode;
-            if (groupShortcutMode == GroupShortcutMode.Conflict) return true;
 
             KeyCode mainKey = __instance.MainKey;
             bool isNumberKey = mainKey >= KeyCode.Alpha0 && mainKey <= KeyCode.Alpha9;
@@ -26,6 +25,17 @@ namespace BetterCommands.Patches
             bool ctrlPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
             bool shiftPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             bool altPressed = Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
+
+            //当启用冲突模式时，按数字键时，拦截原版功能
+            if (isNumberKey && groupShortcutMode == GroupShortcutMode.Conflict)
+            {
+                int keyNum = mainKey - KeyCode.Alpha0;
+                if (keyNum >= 1 && keyNum <= 4)
+                {
+                    __result = false;
+                    return false;
+                }
+            }
 
             if (isNumberKey)
             {

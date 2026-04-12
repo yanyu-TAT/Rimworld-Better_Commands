@@ -15,10 +15,34 @@ namespace BetterCommands.Core
         public float zoom;
         public int mapID;
     }
+
+    public enum GroupMemberType
+    {
+        Pawn,       //殖民者
+        Building,   //建筑
+        Invalid     //无效
+    }
+
+    public class GroupMemberData : IExposable, IEquatable<GroupMemberData>
+    {
+        public int thingIDNumber;
+        public GroupMemberType type;
+
+        public bool Equals(GroupMemberData other)
+        {
+            return thingIDNumber == other.thingIDNumber && type == other.type;
+        }
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref thingIDNumber, "ThingIDNumber");
+            Scribe_Values.Look(ref type, "GroupMemberType", GroupMemberType.Pawn);
+        }
+    }
     public class GroupData : GameComponent
     {
-        private List<List<int>> groupList = new List<List<int>>();
-        private List<ViewPortState> viewPortStates = new List<ViewPortState>();
+        private List<List<GroupMemberData>> groupList = new(10);
+        private List<ViewPortState> viewPortStates = new();
 
         public GroupData(Game game)
         {
@@ -32,7 +56,7 @@ namespace BetterCommands.Core
 
             for (int i = 0; i < 10; i++)
             {
-                groupList.Add(new List<int>());
+                groupList.Add(new List<GroupMemberData>());
             }
 
             for (int i = 0; i < 12; i++)
@@ -46,11 +70,11 @@ namespace BetterCommands.Core
             base.ExposeData();
             if (Scribe.mode == LoadSaveMode.Saving)
             {
-                //人员编组数据存储
+                //人员编组数据存储（新）
                 for (int i = 0; i < 10; i++)
                 {
-                    List<int> list = groupList[i];
-                    Scribe_Collections.Look(ref list, $"BertterCommands_Group{i}", LookMode.Value);
+                    List<GroupMemberData> list = groupList[i];
+                    Scribe_Collections.Look(ref list, $"BertterCommands_GroupMembers{i}", LookMode.Deep);
                 }
 
                 //屏幕视角数据存储
@@ -62,14 +86,33 @@ namespace BetterCommands.Core
                     Scribe_Values.Look(ref state.mapID, $"BertterCommands_ViewPortMapID{i}");
                 }
             }
-            else if (Scribe.mode == LoadSaveMode.LoadingVars)
+
+            if (Scribe.mode == LoadSaveMode.LoadingVars)
             {
                 //人员编组数据加载
                 for (int i = 0; i < 10; i++)
                 {
+                    List<GroupMemberData> list = null;
+                    Scribe_Collections.Look(ref list, $"BertterCommands_GroupMembers{i}", LookMode.Deep);
+                    groupList[i] = list ?? new List<GroupMemberData>();
+                }
+
+                //人员编组数据加载（旧，兼容之前版本）
+                for (int i = 0; i < 10; i++)
+                {
                     List<int> list = null;
                     Scribe_Collections.Look(ref list, $"BertterCommands_Group{i}", LookMode.Value);
-                    groupList[i] = list ?? new List<int>();
+                    if (groupList[i].Empty() && !list.Empty())
+                    {
+                        foreach (var id in list)
+                        {
+                            groupList[i].Add(new GroupMemberData
+                            {
+                                thingIDNumber = id,
+                                type = GroupMemberType.Pawn
+                            });
+                        }
+                    }
                 }
 
                 //屏幕视角数据加载
@@ -84,8 +127,17 @@ namespace BetterCommands.Core
             }
         }
 
+        public static GroupMemberType ResolveType(Thing thing)
+        {
+            if (thing is Pawn pawn && pawn.Spawned && pawn.Faction == Faction.OfPlayer 
+                && !pawn.IsAnimal) return GroupMemberType.Pawn;                     //仅支持非动物的殖民者编组
+            if (thing is Building building && building.Spawned && building.Faction == Faction.OfPlayer
+                && building is Building_Turret) return GroupMemberType.Building;    //仅支持炮塔建筑编组
+            return GroupMemberType.Invalid;
+        }
+
         //创建编组
-        public bool CreateGroup(int num, List<Pawn> pawns)
+        public bool CreateGroup(int num, List<Thing> things)
         {
             if (num < 0 || num >= 10){
                 Log.Error("[Better Commands] Group number out of range.");
@@ -94,11 +146,17 @@ namespace BetterCommands.Core
 
             groupList[num].Clear();
 
-            foreach (var pawn in pawns)
+            foreach (var thing in things)
             {
-                if (pawn != null)
+                var type = ResolveType(thing);
+                if (thing != null && type != GroupMemberType.Invalid)
                 {
-                    groupList[num].Add(pawn.thingIDNumber);
+                    GroupMemberData memberData = new()
+                    {
+                        thingIDNumber = thing.thingIDNumber,
+                        type = type
+                    };
+                    groupList[num].Add(memberData);
                     //Log.Message($"Added Pawn {pawn.Name} to group {num}");
                 }
             }
@@ -107,7 +165,7 @@ namespace BetterCommands.Core
         }
 
         //获取编组成员（当前地图内）
-        public IEnumerable<Pawn> GetGroupMembers(int num)
+        public IEnumerable<Thing> GetGroupMembers(int num)
         {
             if (num < 0 || num >= 10)
             {
@@ -115,7 +173,7 @@ namespace BetterCommands.Core
                 yield break;
             }
 
-            List<int> ids = groupList[num];
+            List<GroupMemberData> ids = groupList[num];
             if (ids == null || ids.Count == 0)
             {
                 //Verse.Log.Message($"Group {num} is empty.");
@@ -129,13 +187,33 @@ namespace BetterCommands.Core
                 yield break;
             }
 
-            foreach (var id in ids)
+            List<Thing> things = null;
+            List<Pawn> pawns = map.mapPawns.AllPawns.Where(p => p.Spawned && p.Faction == Faction.OfPlayer).ToList();
+            foreach (var member in ids)
             {
-                Pawn pawn = map.mapPawns.AllPawns.Find(p => p.thingIDNumber == id && p.Spawned && p.Faction == Faction.OfPlayer);
-                if (pawn != null)
+                if (member.type == GroupMemberType.Building){
+                    things ??= map.listerBuildings.allBuildingsColonist.ToList<Thing>();
+                    Thing thing = things.FirstOrDefault(t => t.thingIDNumber == member.thingIDNumber);
+                    if (thing != null)
+                    {
+                        yield return thing;
+                    }
+                    else
+                    {
+                        Log.Warning($"Building with ID {member.thingIDNumber} not found on current map for group {num}.");
+                    }
+                }
+                if (member.type == GroupMemberType.Pawn)
                 {
-                    yield return pawn;
-                    //Verse.Log.Message($"Selected Pawn {pawn.Name} from group {num}");
+                    Pawn pawn = pawns.FirstOrDefault(p => p.thingIDNumber == member.thingIDNumber);
+                    if (pawn != null)
+                    {
+                        yield return pawn;
+                    }
+                    else
+                    {
+                        Log.Warning($"Pawn with ID {member.thingIDNumber} not found on current map for group {num}.");
+                    }
                 }
             }
         }
@@ -143,16 +221,16 @@ namespace BetterCommands.Core
         //选中编组
         public bool SelectGroup(int num)
         {
-            List<Pawn> pawnsToSelect = GetGroupMembers(num).ToList();
-            if (pawnsToSelect.Count > 0)
+            List<Thing> thingsToSelect = GetGroupMembers(num).ToList();
+            if (thingsToSelect.Count > 0)
             {
                 Find.Selector.ClearSelection();
-                foreach (var pawn in pawnsToSelect)
+                foreach (var thing in thingsToSelect)
                 {
-                    Find.Selector.Select(pawn, false, true);
+                    Find.Selector.Select(thing, false, true);
                     //如果启用了自动征召且征召可用，则播放音效并征召未征召的单位
                     //Log.Message($"[BetterCommands] Selecting pawns, auto draft:{BetterCommandsMod.CurrentAutoDraftOption}");
-                    if (BetterCommandsMod.CurrentAutoDraftOption && !pawn.Drafted)
+                    if (thing is Pawn pawn && BetterCommandsMod.CurrentAutoDraftOption && !pawn.Drafted)
                     {
                         //依据原版逻辑进行判定
                         bool canDraft = !(pawn.Downed || pawn.Deathresting);
@@ -215,7 +293,7 @@ namespace BetterCommands.Core
         }
 
         //移出编组
-        public int DeleteFromGroup(int num, List<Pawn> pawns)
+        public int DeleteFromGroup(int num, List<Thing> things)
         {
             if (num < 0 || num >= 10)
             {
@@ -224,14 +302,28 @@ namespace BetterCommands.Core
             }
 
             var cnt = 0;
-            foreach (var pawn in pawns)
+            foreach (var thing in things)
             {
-                if (pawn != null)
+                if (thing != null)
                 {
-                    var id = pawn.thingIDNumber;
-                    if (groupList[num].Remove(id))
+                    var type = ResolveType(thing);
+                    var map = Find.CurrentMap;
+                    if (map == null)
                     {
-                        cnt++; 
+                        Log.Error("[Better Commands] No current map found.");
+                        continue;
+                    }
+                    if (type != GroupMemberType.Invalid)
+                    {
+                        GroupMemberData member = new()
+                        {
+                            thingIDNumber = thing.thingIDNumber,
+                            type = type,
+                        };
+                        if (groupList[num].Remove(member))
+                        {
+                            cnt++;
+                        }
                     }
                 }
             }
@@ -239,30 +331,37 @@ namespace BetterCommands.Core
         }
 
         //向编组添加单个殖民者
-        public bool AddToGroup(int num, Pawn pawn)
+        public bool AddToGroup(int num, Thing thing)
         {
             if (num < 0 || num >= 10)
             {
                 Log.Error("[Better Commands] Group number out of range.");
                 return false;
             }
-
-            groupList[num].Add(pawn.thingIDNumber);
+            
+            var type = ResolveType(thing);
+            GroupMemberData member = new()
+            {
+                thingIDNumber = thing.thingIDNumber,
+                type = type
+            };
+            if (type == GroupMemberType.Invalid || groupList[num].Contains(member)) return false; //避免重复添加/添加非法对象
+            groupList[num].Add(member);
             return true;
         }
 
         //跳转到对应编组中心
         public bool JumpToGroupCenter(int index)
         {
-            List<Pawn> pawns = GetGroupMembers(index).ToList();
-            if(pawns == null || pawns.Count == 0) return false;
+            List<Thing> things = GetGroupMembers(index).ToList();
+            if(things == null || things.Count == 0) return false;
 
             IntVec3 center = IntVec3.Zero;
-            foreach (var pawn in pawns)
+            foreach (var thing in things)
             {
-                center += pawn.Position;
+                center += thing.Position;
             }
-            center /= pawns.Count;
+            center /= things.Count;
 
             Map map = Find.CurrentMap;
             if (map ==  null) return false;

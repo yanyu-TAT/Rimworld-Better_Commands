@@ -69,7 +69,7 @@ namespace BetterCommands.Core
                 "BetterCommands.GroupShortcutModeDescription".Translate(),
                 GroupShortcutMode.Compact
             );
-            groupShortcutSettingHandle.CustomDrawerHeight = 70f;
+            groupShortcutSettingHandle.CustomDrawerHeight = 130f;
 
             autoDraftOptionHandle = Settings.GetHandle<bool>(
                 "BetterCommands.AutoDraftOption",
@@ -179,6 +179,11 @@ namespace BetterCommands.Core
  * - [x] 添加对shift + 双击1~9的检测：跳转到编组中心
  * - [x] 实现就近寻找掩体的指令
  * - [x] 绘制icon和添加翻译
+ * - [x] 修复掉帧时选中编组的响应延迟
+ * - [x] 修改编组使用的数据结构
+ * - [x] 测试
+ * - [x] 修改快捷键行为方式
+ * - [x] 测试
  * - [ ] 制作宣传用gif
  */
 
@@ -202,6 +207,8 @@ namespace BetterCommands.Core
  * 02/06 18:57 添加了对shift + 双击0~9的检测：跳转到编组中心
  * 02/06 21:10 添加了是否显示编组MainTab的设置选项
  * 02/08 22:58 添加了就近寻找掩体的新指令及其icon，测试通过
+ * 04/07 19:49 添加了建筑编组的功能，修复了掉帧导致的选中编组响应延迟问题，初步测试通过，与其他模组的兼容性有待测试
+ * 04/12 20:16 根据用户需求修改了快捷键行为方式，初步测试通过
  */
 
 /* Develop Plan:
@@ -211,5 +218,6 @@ namespace BetterCommands.Core
  * 添加翻译文件   - Done
  * 编组管理UI     - Done
  * 就近寻找掩体   - Done
+ * 加入建筑的编组 - Done
  * 制作更多宣传
  */

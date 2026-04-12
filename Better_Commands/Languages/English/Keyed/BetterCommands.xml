@@ -2,13 +2,14 @@
 <LanguageData>
 	<BetterCommands.GroupShortcutModeTitle>Group Shortcut Mode</BetterCommands.GroupShortcutModeTitle>
 	<BetterCommands.GroupShortcutModeDescription>
-		·Compatibility mode: Disable the original single key function when pressing the combination key, and retain the single key function. (recommended)
-		·Disable mode: Disable all combination keys that conflict with the original single key function (the Fn key will not be able to save camera position saving. function)
-		·Conflict mode: Pressing a combination key will trigger both single key and combination key functions simultaneously. (stable, but difficult to use)
+		Common: Ctrl+number saves the group; Alt+number removes selected units from the group; press the same number again within a short time to jump to the group's center.
+		·Compact (recommended): Only Shift+number selects a group; bare number keys do nothing for groups. While Shift is held, vanilla bindings on the same keys (e.g. speed keys 1–4) are suppressed.
+		·Disable: Keys 1–4 are not used for groups (Ctrl/Shift/Alt+1–4 do nothing). Keys 0 and 5–9 can be pressed alone to select a group; vanilla speed keys 1–4 still work. Camera F-key shortcuts for this mod are disabled in this mode.
+		·Conflict: Bare keys 0–9 all select a group; vanilla bare keys 1–4 are suppressed. Shift+number and the Ctrl/Alt combos above still work.
 	</BetterCommands.GroupShortcutModeDescription>
-	<BetterCommands.GroupShortcutCompactMode>Compact Mode</BetterCommands.GroupShortcutCompactMode>
-	<BetterCommands.GroupShortcutDisableMode>Disable Mode</BetterCommands.GroupShortcutDisableMode>
-	<BetterCommands.GroupShortcutConflictMode>Conflict Mode</BetterCommands.GroupShortcutConflictMode>
+	<BetterCommands.GroupShortcutCompactMode>Compact (Shift+number)</BetterCommands.GroupShortcutCompactMode>
+	<BetterCommands.GroupShortcutDisableMode>Disable (0 / 5–9 bare)</BetterCommands.GroupShortcutDisableMode>
+	<BetterCommands.GroupShortcutConflictMode>Conflict (0–9 bare)</BetterCommands.GroupShortcutConflictMode>
 	<BetterCommands.AutoDraftOptionTitle>Auto Draft</BetterCommands.AutoDraftOptionTitle>
 	<BetterCommands.AutoDraftOptionDescription>Control if the quick grouping function automatically put a unit into draft mode when selecting it.</BetterCommands.AutoDraftOptionDescription>
 	<BetterCommands.GroupSavingDone>Group {num} saved {count} units</BetterCommands.GroupSavingDone>

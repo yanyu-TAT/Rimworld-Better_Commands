@@ -18,14 +18,35 @@ namespace BetterCommands.Core
     [HarmonyPatch("Update")]
     public static class Listener
     {
-        private const int DoubleClick_Time = 45; // 60帧/s
+        private const float DoubleClick_Time = 0.33f; //双击时间间隔
 
         //用于阻止重复处理
         private static Dictionary<KeyCode, bool> keysProcessed = new();
         private static int lastFrame = -1;
 
         //用于检测双击
-        private static Dictionary<KeyCode, int> lastClicked = new();
+        private static Dictionary<KeyCode, float> lastClicked = new();
+
+        /// <summary>
+        /// 记录双击事件，若在规定时间内再次点击同一数字键，则执行跳转到编组中心的操作
+        /// </summary>
+        /// <param name="groupIndex">编组索引</param>
+        /// <param name="key">按下的键</param>
+        /// <param name="groupData">编组数据对象</param>
+        private static void HandleDoubleClick(int groupIndex, KeyCode key, GroupData groupData)
+        {
+            var now = Time.realtimeSinceStartup;
+            if (lastClicked.ContainsKey(key) && now - lastClicked[key] < DoubleClick_Time)
+            {
+                //Log.Message($"[BetterCommands] lastKeyPressed : {groupIndex} : {now - lastClicked[key]}");
+                groupData.JumpToGroupCenter(groupIndex);
+                lastClicked.Remove(key);
+            }
+            else
+            {
+                lastClicked[key] = now;
+            }
+        }
         public static void Postfix()
         {
             if (Current.Game == null)
@@ -42,10 +63,12 @@ namespace BetterCommands.Core
                 keysProcessed.Clear();
             }
 
+            //检查双击超时
             for (int i = 0; i <= 9; i++)
             {
+                var now = Time.realtimeSinceStartup;
                 KeyCode key = KeyCode.Alpha0 + i;
-                if (lastClicked.ContainsKey(key) && Time.frameCount - lastClicked[key] >= DoubleClick_Time)
+                if (lastClicked.ContainsKey(key) && now - lastClicked[key] >= DoubleClick_Time)
                 {
                     lastClicked.Remove(key);
                     groupData.SelectGroup(i);
@@ -68,23 +91,26 @@ namespace BetterCommands.Core
                         continue;
                     keysProcessed[key] = true;
                     //Verse.Log.Message($"检测到按键: {key}");
-                    if (GroupSettingsUtility.ShouldHandleGroupShortcuts(i)){
+                    if (GroupSettingsUtility.ShouldHandleGroupShortcuts(i))
+                    {
                         //Verse.Log.Message($"Ctrl: {ctrlPressed}, Shift: {shiftPressed}");
 
                         //ctrl + 数字键
                         if (ctrlPressed && !shiftPressed && !altPressed)
                         {
                             //Verse.Log.Message($"保存编组 {i}");
-                            List<Pawn> selectedPawns = Find.Selector.SelectedPawns
-                                .Where(p => p.Faction == Faction.OfPlayer && !p.IsAnimal)
+                            List<Thing> selectedThings = Find.Selector.SelectedObjects
+                                .OfType<Thing>()
+                                .Where(p => GroupData.ResolveType(p) != GroupMemberType.Invalid)
                                 .ToList();
 
-                            if (selectedPawns.Count != 0)
+                            if (selectedThings.Count != 0)
                             {
-                                groupData.CreateGroup(i, selectedPawns);
-                                Messages.Message(Helper.Translate("BetterCommands.GroupSavingDone", ("num", i), ("count", selectedPawns.Count)), MessageTypeDefOf.TaskCompletion);
+                                groupData.CreateGroup(i, selectedThings);
+                                Messages.Message(Helper.Translate("BetterCommands.GroupSavingDone", ("num", i), ("count", selectedThings.Count)), MessageTypeDefOf.TaskCompletion);
                             }
-                            else{
+                            else
+                            {
                                 Messages.Message("BetterCommands.GroupingNoValidPawnRefusion".Translate(), MessageTypeDefOf.RejectInput);
                             }
                             Event.current?.Use();
@@ -94,17 +120,7 @@ namespace BetterCommands.Core
                         //shift + 数字键
                         if (shiftPressed && !ctrlPressed && !altPressed)
                         {
-                            Log.Message($"检测到按键: {key}");
-                            if (lastClicked.ContainsKey(key) && Time.frameCount - lastClicked[key] < DoubleClick_Time)
-                            {
-                                Log.Message($"[BetterCommands] lastKeyPressed : {i} : {Time.frameCount - lastClicked[key]}");
-                                groupData.JumpToGroupCenter(i);
-                                lastClicked.Remove(key);
-                            }
-                            else
-                            {
-                                lastClicked.Add(key, Time.frameCount);
-                            }
+                            HandleDoubleClick(i, key, groupData);
                             Event.current?.Use();
                             return;
                         }
@@ -112,14 +128,15 @@ namespace BetterCommands.Core
                         //alt + 数字键
                         if (!ctrlPressed && altPressed && !shiftPressed)
                         {
-                            List<Pawn> selectedPawns = Find.Selector.SelectedPawns
-                                .Where(p => p.Faction == Faction.OfPlayer)
+                            List<Thing> selectedThings = Find.Selector.SelectedObjects
+                                .OfType<Thing>()
+                                .Where(p => GroupData.ResolveType(p) != GroupMemberType.Invalid)
                                 .ToList();
 
-                            if(selectedPawns.Count != 0)
+                            if (selectedThings.Count != 0)
                             {
-                                int cnt = groupData.DeleteFromGroup(i, selectedPawns);
-                                if(cnt != 0)
+                                int cnt = groupData.DeleteFromGroup(i, selectedThings);
+                                if (cnt != 0)
                                 {
                                     Messages.Message(Helper.Translate("BetterCommands.GroupDeletingDone", ("num", i), ("count", cnt)), MessageTypeDefOf.TaskCompletion);
                                 }
@@ -133,6 +150,14 @@ namespace BetterCommands.Core
                                 Messages.Message("BetterCommands.GroupingNoValidPawnRefusion".Translate(), MessageTypeDefOf.RejectInput);
                             }
 
+                            Event.current?.Use();
+                            return;
+                        }
+
+                        //仅数字键
+                        if (!ctrlPressed && !shiftPressed && !altPressed && GroupSettingsUtility.ShouldHandleNumberOnly(i))
+                        {
+                            HandleDoubleClick(i, key, groupData);
                             Event.current?.Use();
                             return;
                         }

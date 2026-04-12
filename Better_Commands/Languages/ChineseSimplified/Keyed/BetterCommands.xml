@@ -2,13 +2,14 @@
 <LanguageData>
 	<BetterCommands.GroupShortcutModeTitle>编组快捷键模式</BetterCommands.GroupShortcutModeTitle>
 	<BetterCommands.GroupShortcutModeDescription>
-		·兼容模式：在按下组合键时禁用原版单键功能，保留单键的功能（推荐）
-		·禁用模式：禁用所有与原版单键功能冲突的组合键（将无法使用Fn键保存屏幕位置的功能）
-		·冲突模式：按下组合键将同时触发单键和组合键的功能（稳定，但难以使用）
+		通用：Ctrl+数字 保存编组，Alt+数字 从编组移出当前选中单位；连按同一数字（短时内第二次）可跳转至编组中心。
+		·兼容模式（推荐）：仅 Shift+数字 选取编组；单独按数字不会触发编组。按住 Shift 再按数字时，会屏蔽与该键冲突的原版快捷键（如调速 1–4）。
+		·禁用模式：数字 1–4 不参与编组（Ctrl/Shift/Alt+1–4 均无效）；数字 0 与 5–9 可单独按下选取编组；原版调速 1–4 仍可用。此模式下 Ctrl/Shift 与 F1–F11 的镜头位置编组快捷键不生效。
+		·冲突模式：单独按数字 0–9 均可选取编组；原版数字 1–4 的裸键功能被屏蔽。仍可使用 Shift+数字 与上述 Ctrl/Alt 组合。
 	</BetterCommands.GroupShortcutModeDescription>
-	<BetterCommands.GroupShortcutCompactMode>兼容模式</BetterCommands.GroupShortcutCompactMode>
-	<BetterCommands.GroupShortcutDisableMode>禁用模式</BetterCommands.GroupShortcutDisableMode>
-	<BetterCommands.GroupShortcutConflictMode>冲突模式</BetterCommands.GroupShortcutConflictMode>
+	<BetterCommands.GroupShortcutCompactMode>兼容模式（Shift+数字）</BetterCommands.GroupShortcutCompactMode>
+	<BetterCommands.GroupShortcutDisableMode>禁用模式（0/5–9 单键）</BetterCommands.GroupShortcutDisableMode>
+	<BetterCommands.GroupShortcutConflictMode>冲突模式（0–9 单键）</BetterCommands.GroupShortcutConflictMode>
 	<BetterCommands.AutoDraftOptionTitle>自动征召</BetterCommands.AutoDraftOptionTitle>
 	<BetterCommands.AutoDraftOptionDescription>使用快捷编组功能选中单位时是否自动使其进入征召状态</BetterCommands.AutoDraftOptionDescription>
 	<BetterCommands.GroupSavingDone>编组 {num} 已保存 {count} 个单位</BetterCommands.GroupSavingDone>

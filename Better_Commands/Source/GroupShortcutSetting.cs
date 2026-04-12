@@ -7,11 +7,11 @@ namespace BetterCommands.Settings
     public enum GroupShortcutMode
     {
         [Description("BetterCommands.GroupShortcutCompactMode")]
-        Compact,
+        Compact,        //shift + 数字选中编组，双击跳转至中心
         [Description("BetterCommands.GroupShortcutDisableMode")]
-        Disable,
+        Disable,        //禁用数字1~4的组合快捷键，其他数字单键按下后选中编组，双击跳转至中心
         [Description("BetterCommands.GroupShortcutConflictMode")]
-        Conflict
+        Conflict        //禁用数字1~4的原版功能，所有数字单键按下后选中编组，双击跳转至中心
     }
 
     public static class GroupSettingsUtility
@@ -32,6 +32,17 @@ namespace BetterCommands.Settings
             }
 
             return false;
+        }
+
+        public static bool ShouldHandleNumberOnly(int keyNum)
+        {
+            return CurrentGroupShortcutMode switch
+            {
+                GroupShortcutMode.Compact => false,
+                GroupShortcutMode.Disable => !(keyNum >= 1 && keyNum <= 4),
+                GroupShortcutMode.Conflict => true,
+                _ => false,
+            };
         }
 
         public static bool ShouldBlockSpeedControl(int keyNum, bool otherKeyPressed)
